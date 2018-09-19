@@ -10,9 +10,14 @@ from boards.models import Members, Board, Post
 
 # Create your views here.
 def index(request):  
-    title = "會員專區"
+    title = "與我們聯繫"
     members = Members.objects.all()
     return render(request,'boards/site.html',locals())
+
+def post(request):  
+    title = "我有話要說"
+    boards = Board.objects.all()
+    return render(request,'boards/post.html',locals())
 
 # def login(request):  
 #     title = "會員登入"

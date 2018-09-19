@@ -1,4 +1,4 @@
-{% extends "aien.html" %}
+{% extends "base.htm" %}
 {% block content %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -6,8 +6,8 @@
                 <label for="select1"" class="col-sm-2 col-form-label">商品分類</label>
                 <div class="col-sm-10">
                     <select id="select1" name="categoryid" class="form-control">
-                       {% for category in categories %} 
-                        <option value="{{category.categoryid}}">{{category.categoryname}}</option>                       
+                       {% for board in boards %} 
+                        <option value="{{board.boardid}}">{{board.name}}</option>                       
                         {% endfor  %} 
                     </select>
                 </div>
