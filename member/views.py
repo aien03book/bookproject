@@ -53,19 +53,22 @@ def register(request):
         name = request.POST["name"]
         email = request.POST["email"]  #w124@gmail.com
         password = request.POST["password"]  
+        checkpassword = request.POST["checkpassword"] 
         age = request.POST["age"] 
 
-        #將資料寫進資料庫
-        with connection.cursor() as cursor:
-            sql = """insert into members(name,email,password,age)
-                     values(%s,%s,%s,%s)"""
-            #tuple
-            cursor.execute(sql,(name,email,password,age))
-        # _member = (name,email,password,age)
-        # member.create(_member)
-        #轉到會員的首頁上
-        return redirect("/member/")
-   
+        if password == checkpassword:
+            #將資料寫進資料庫
+            with connection.cursor() as cursor:
+                sql = """insert into members(name,email,password,age)
+                        values(%s,%s,%s,%s)"""
+                #tuple
+                cursor.execute(sql,(name,email,password,age))
+            # _member = (name,email,password,age)
+            # member.create(_member)
+            #轉到會員的首頁上
+            return redirect("/member/")
+        else:
+            return HttpResponse("<script>alert('驗證密碼不符');location.href='/member/register'</script>") 
         
     return render(request,'member/register.htm',locals())
 
