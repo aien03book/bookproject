@@ -1,0 +1,35 @@
+{% extends "base.htm" %}
+{% block styles %}
+<style>
+    .thumb{
+        width:100px;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <table class="table">
+       <thead>
+           <tr>
+               <th>商品型號</th>
+               <th>商品名稱</th>
+               <th>商品價格</th>
+               <th>商品圖片</th>
+           </tr>
+       </thead>
+       <tbody>
+           {% for member in members %}
+           <tr>
+               <td>{{ member.name }}</td>
+               <td>{{ member.email }}</td>
+               <td>{{ member.password }}</td>
+               <td><img class="img-thumbnail thumb" src="/media/{{product.productimage}}" /></td>
+           </tr>
+           {% endfor %}
+       </tbody>
+    </table>
+{% endblock%}
+
+{% block scripts%}
+{% endblock%}
+
