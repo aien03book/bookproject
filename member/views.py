@@ -16,8 +16,6 @@ def index(request):
         cursor.execute(sql)
         members = cursor.fetchall()
     return render(request,'member/index.htm',locals())
-    
-    
     #呼叫方法
     # members = member.all()
     # return render(request,'member/index.html',locals())

@@ -14,11 +14,11 @@
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">更多</a>
                       <div class="dropdown-menu" aria-labelledby="More">
-                        <a class="dropdown-item" href="{% url "member:register" %}">註冊會員</a>
-                        <a class="dropdown-item" href="{% url "member:login" %}">會員登入</a>   
-                        <a class="dropdown-item" href="{% url "homepage:checkin" %}">我要打卡</a>
+
+                        <a class="dropdown-item" href="{% url "homepage:register" %}">註冊會員</a>
+                        <a class="dropdown-item" href="{% url "homepage:checkin" %}">會員登入</a>   
                         <a class="dropdown-item" href="{% url "homepage:ourteam" %}">我們的團隊</a>
-                        <a class="dropdown-item" href="{% url "homepage:ourteam" %}">test123</a>
+                        <a class="dropdown-item" href="{% url "meetingroom:index" %}">活動室</a>
                         
                         <!-- <a class="dropdown-item" href="#">Something else here</a> -->
                       </div>

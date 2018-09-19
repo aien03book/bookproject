@@ -8,7 +8,7 @@ urlpatterns = [
     #index表示views.py下的function
     path('ourteam/',views.ourteam,name="ourteam"),
     path('checkin/',views.checkin,name="checkin"),
-    # path('register/',views.register,name="register"),
+    path('register/',views.register,name="register"),
     path('login/',views.checkin,name="login"),
     
     path('delete/<int:id>',views.delete,name="delete"),
