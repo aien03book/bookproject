@@ -1,0 +1,31 @@
+{% extends "base.htm" %}
+{% block content %}
+  
+<table >
+       <thead>
+           <tr>
+               <th>姓名</th>
+               <th>電子郵件</th>
+               <th>密碼</th>
+               <th>年紀</th>
+               <th>編輯</th>
+           </tr>
+       </thead>
+       <tbody>
+           {% for member in members %}
+           <tr>
+               <td>{{member.1}}</td>
+               <td>{{member.2}}</td>
+               <td>{{member.3}}</td>
+               <td>{{member.4}}</td>
+               <td>
+                   <a href="{% url "member:delete" member.0 %}">刪除</a>
+                   <a href="{% url "member:update" member.0 %}">修改</a>
+                </td>
+           </tr>
+          {% endfor %}
+       </tbody>
+   </table>
+
+   
+{% endblock%}

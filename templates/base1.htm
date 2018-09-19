@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+            body {
+                padding-top:20em;
+                
+            }
+            
+            
+            
+    </style>
+    
+</head>
+<body>
+        {% include "head.htm" %}
+    
+
+        
+        <h1 class="text-center"> Smart Lib System</h1>
+        
+	
+        <div class="container">
+        <div class="row">
+        
+        <!--team-1-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        <div class="team-front">
+        
+                
+                123
+        </div>
+        
+        <div class="team-back">
+        <span>
+                
+        </span>
+        </div>
+        
+        </div>
+        </div>
+        <!--team-1-->
+        
+        <!--team-2-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        
+        <div class="team-front">
+                {%block roombook%}
+                {%endblock%}
+        </div>
+        
+        <div class="team-back">
+        <span>
+        AAA
+        </span>
+        </div>
+        
+        </div>
+        </div>
+        <!--team-2-->
+        
+        <!--team-3-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        
+        <div class="team-front">
+                {%block news%}
+                {%endblock%}
+        </div>
+        
+        <div class="team-back">
+        <span>
+        NEW RELEASED
+        </span>
+        </div>
+        
+        </div>
+        </div>
+        <!--team-3-->
+        
+        <!--team-4-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        
+        <div class="team-front">
+                {%block bookreservation%}
+                {%endblock%}
+        </div>
+        
+        <div class="team-back">
+        <span>
+        tellme
+        </span>
+        </div>
+        
+        </div>
+        </div>
+        <!--team-4-->
+        
+        <!--team-5-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        
+        <div class="team-front" > 
+                {%block contact%}
+                {%endblock%}
+        </div>
+        
+        <div class="team-back">
+        <span>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+        natoque penatibus et magnis dis parturient montes,
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+        natoque.
+        </span>
+        </div>
+        
+        </div>
+        </div>
+        <!--team-5-->
+        
+        <!--team-6-->
+        <div class="col-lg-4">
+        <div class="our-team-main">
+        
+        <div class="team-front">
+        
+        
+        {%block ourteam%}
+        {% endblock %}
+        </div>
+        
+        <div class="team-back">
+        <span>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+        natoque penatibus et magnis dis parturient montes,
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+        natoque.
+        
+        </span>
+        </div>
+        
+        </div>
+        </div>   
+        
+        
+    {% include "footer.htm" %}
+    
+</body>
+</html>
