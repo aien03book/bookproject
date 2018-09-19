@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'store',
     'member',
     'bookbor',
-    'MeetingRoom'
+    'MeetingRoom',
+    'boards',
 ]
 
 MIDDLEWARE = [
