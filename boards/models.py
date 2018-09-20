@@ -9,17 +9,14 @@ class Members(models.Model):
     age = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'members'
 
 
 class Board(models.Model):
     boardid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30, unique=True)
-    description = models.CharField(max_length=100)
-    
+        
     class Meta:
-        managed = False
         db_table = 'boards'    
 
 
@@ -31,5 +28,4 @@ class Post(models.Model):
     createdby = models.ForeignKey('Members',models.DO_NOTHING,db_column='memberid')
     
     class Meta:
-        managed = False
         db_table = 'posts'       
