@@ -1,12 +1,24 @@
 {% extends "base.htm" %}
+{%load static%}
 {% block content %}
 <table class="table">
     <thead class="thead-dark">
-        <th scope="col"></th>
+        <th scope="col">預覽</th>
         <th scope="col">名稱</th>
         <th scope="col">位置</th>
         <th scope="col">描述</th>
         <th scope="col">預約</th>
     </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+        <td> <img src="../media/{{room.5}}"></td>
+        <td>{{room.1}}</td>
+        <td>{{room.3}}</td>
+        <td>{{room.4}}</td>
+        <td>#</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.htm" %}
+{% block content %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="select1"" class="col-sm-2 col-form-label">商品分類</label>
+                <div class="col-sm-10">
+                    <select id="select1" name="categoryid" class="form-control">
+                       {% for board in boards %} 
+                        <option value="{{board.boardid}}">{{board.name}}</option>                       
+                        {% endfor  %} 
+                    </select>
+                </div>
+              </div>
+            <div class="form-group row">
+                <label for="inputnumber" class="col-sm-2 col-form-label">商品型號</label>
+                <div class="col-sm-10">
+                 <input type="text" class="form-control" id="inputnumber" placeholder="model number" name="modelnumber">
+                </div>
+              </div>
+            <div class="form-group row">
+                <label for="inputname"" class="col-sm-2 col-form-label">商品名稱</label>
+                <div class="col-sm-10">
+                 <input type="text" class="form-control" id="inputname" placeholder="model name" name="modelname">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputprice"" class="col-sm-2 col-form-label">商品價格</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputprice" placeholder="unit cost" name="unitcost">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="file1" class="col-sm-2 col-form-label">商品圖片</label>
+                <div class="col-sm-10">
+                  <input type="file"" class="form-control" id="file1" placeholder="product image" name="productimage">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="desc" class="col-sm-2 col-form-label">商品描述</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" id="desc" placeholder="product description" name="description"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary"><i class="fab fa-angellist"></i> 新增</button>
+                </div>
+              </div>
+        </form>
+{% endblock %}
