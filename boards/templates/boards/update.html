@@ -8,25 +8,20 @@
 
             <div class="form-group row">
               <label for="select1" >反應事項類別</label>
-                
                     <select id="select1" name="boardid" class="form-control">
-                      {% for board in boards %} 
-                        <option value="{{board.boardid}}">{{board.name}}</option>                       
-                      {% endfor %} 
+                      {% for p in post %} 
+                        <option>{{p.board}}</option>                       
                     </select>
-                
             </div>
             
             <div class="form-group row">
                 <label for="message" >反應內容</label>
-                
-                  <textarea class="form-control" id="meassage" placeholder="具體反應事項"" name="message"></textarea>
-                
+                  <textarea class="form-control" id="meassage" name="message" >{{ p.message }}</textarea>
             </div>
-            
+                      {% endfor %} 
             <div class="form-group row">
               <div><a class="btn btn-info" href="{% url 'boards:site' %}" role="button">返回上一頁</a></div>
-              <button style="margin-left:120px;"type="submit" class="btn btn-primary"><i class="fab fa-angellist"></i> 新增</button>
+              <button style="margin-left:120px;"type="submit" class="btn btn-primary"><i class="fab fa-angellist"></i> 更新</button>
                   
             </div>
 </form>

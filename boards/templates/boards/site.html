@@ -1,33 +1,35 @@
 {% extends "base.htm" %}
-{% block styles %}
-<style>
-    .thumb{
-        width:100px;
-    }
-    </style>
-{% endblock %}
-{% block content %}
 
+{% block styles %}
+{% endblock %}
+
+{% block main %}
+<p><a class="btn btn-info" href="{% url 'boards:post' %}" role="button">我有話要說</a></p>
     <table class="table">
        <thead>
            <tr>
-               <th>商品型號</th>
-               <th>商品名稱</th>
-               <th>商品價格</th>
-               <th>商品圖片</th>
+               <th>反應類別</th>
+               <th>反應內容</th>
+               <th>反應時間</th>
+               <th>反應者</th>
+               <th>刪除</th>
+               <th>修改</th>
            </tr>
        </thead>
        <tbody>
-           {% for member in members %}
+           {% for p in posts %}
            <tr>
-               <td>{{ member.name }}</td>
-               <td>{{ member.email }}</td>
-               <td>{{ member.password }}</td>
-               <td><img class="img-thumbnail thumb" src="/media/{{product.productimage}}" /></td>
+               <td>{{ p.board }}</td>
+               <td>{{ p.message }}</td>
+               <td>{{ p.createdat }}</td>
+               <td>{{ p.createdby }}</td>
+               <td><a class="btn btn-danger" role="button" href="{% url 'boards:remove' p.postid %}"><i class="fas fa-trash"></i>刪除</a></td> 
+               <td><a class="btn btn-warning" role="button" href="{% url 'boards:update' p.postid %}"><i class="fas fa-pen-fancy"></i>修改</a></td>
            </tr>
            {% endfor %}
        </tbody>
     </table>
+
 {% endblock%}
 
 {% block scripts%}
