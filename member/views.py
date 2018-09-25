@@ -30,10 +30,11 @@ def login(request):
             if 'url' in request.GET:
                 theUrl=request.GET["url"]
             else:
-                theUrl=request.GET["/"]
+                theUrl="/"
             name=theMember[0]['name']
+            strJS = "<script>alert('登入成功');location.href='" + theUrl + "'</script>"
+            response = HttpResponse(strJS)
             
-            response= HttpResponse("<script>alert('登入成功');location.href="' + url+' "</script>")
             remember = None
             if 'remember' in request.POST.keys():
                 # remember = request.POST["remember"]
