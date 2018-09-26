@@ -1,6 +1,7 @@
 {% extends "base.htm" %}
 
 {% block styles %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
 {% endblock %}
 
 {% block main %}
@@ -33,5 +34,22 @@
 {% endblock%}
 
 {% block scripts%}
+    <!--引用jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!--引用dataTables.js-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+     
+    <script type="text/javascript">
+        $(function () {
+
+            $(".table").DataTable({
+                searching: true, //關閉filter功能
+                columnDefs: [{
+                    targets: [3],
+                    orderable: false,
+                }]
+            });
+        });
+    </script>
 {% endblock%}
 

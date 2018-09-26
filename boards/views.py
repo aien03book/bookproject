@@ -26,7 +26,8 @@ def post(request):
     if request.method == "POST":
         boardid = request.POST['boardid']
         message = request.POST['message']
-        Post.objects.create(board=Board.objects.get(boardid=boardid),message=message)
+        createby = request.COOKIES['name']
+        Post.objects.create(board=Board.objects.get(boardid=boardid),message=message,createdby=Members.objects.get(name=createby))
         return redirect('/boards')
     boards = Board.objects.all()
     return render(request,'boards/post.html',locals())
