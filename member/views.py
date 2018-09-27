@@ -27,10 +27,10 @@ def login(request):
         password = request.POST["password"] 
         theMember=Members.objects.filter(email=email,password=password).values('name')
         if theMember:
-            if 'url' in request.GET:
-                theUrl=request.GET["url"]
-            else:
-                theUrl=request.GET["/"]
+            # if 'url' in request.GET:
+            #     theUrl=request.GET["url"]
+            # else:
+            #     theUrl=request.GET[""]
             name=theMember[0]['name']
             
             response= HttpResponse("<script>alert('登入成功');location.href="' + url+' "</script>")
