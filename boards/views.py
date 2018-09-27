@@ -29,19 +29,34 @@ def post(request):
         createby = request.COOKIES['name']
         Post.objects.create(board=Board.objects.get(boardid=boardid),message=message,createdby=Members.objects.get(name=createby))
         return redirect('/boards')
-    boards = Board.objects.all()
+    
     return render(request,'boards/post.html',locals())
 
 def remove(request,id):
+    if 'name' not in request.COOKIES:
+        # return redirect("/member/login")
+        theUrl = request.path
+        strJS = "<script>alert('刪除前，請先登入');location.href='/member/login/?url=" + theUrl + "'</script>"
+        return HttpResponse(strJS)
+
     post = Post.objects.get(postid=id)
-    post.delete()
-    return redirect('/boards/')
+    postname = post.createdby
+    name = request.COOKIES['name']
+    name1 = Members.objects.get(name=name)
+    # return HttpResponse(name == name1)
+    if postname == name1:
+        post.delete()
+        return redirect('/boards')
+    else:
+        return HttpResponse("<script>alert('您非反應者，無法刪除此留言。');location.href='/boards'</script>")
 
 def update(request,id):
     title = "換個方式說"
     post = Post.objects.filter(postid=id)
+            
     if request.method == "POST":
         message = request.POST['message']
         post.update(message=message)        
         return redirect('/boards')
-    return render(request,'boards/update.html',locals())
+    
+    return render(request,'boards/update.html',locals())    
