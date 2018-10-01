@@ -9,18 +9,25 @@ from boards.models import Members, Board, Post
 # member = Members()
 
 # Create your views here.
-def site(request):  
+def site(request):
     title = "與我們聯繫"
     posts = Post.objects.all()
     return render(request,'boards/site.html',locals())
 
 def post(request):  
+    if 'name' not in request.COOKIES:
+        # return redirect("/member/login")
+        theUrl = request.path
+        strJS = "<script>alert('留言前，請先登入');location.href='/member/login/?url=" + theUrl + "'</script>"
+        return HttpResponse(strJS)
+
     title = "我有話要說"
     boards = Board.objects.all()
     if request.method == "POST":
         boardid = request.POST['boardid']
         message = request.POST['message']
-        Post.objects.create(board=Board.objects.get(boardid=boardid),message=message)
+        createby = request.COOKIES['name']
+        Post.objects.create(board=Board.objects.get(boardid=boardid),message=message,createdby=Members.objects.get(name=createby))
         return redirect('/boards')
     boards = Board.objects.all()
     return render(request,'boards/post.html',locals())
