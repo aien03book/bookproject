@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block main %}
-<p><a class="btn btn-info" href="{% url 'boards:post' %}" role="button">我有話要說</a></p>
-    <table class="table">
+<div class="container">
+    <div class="row">
+    <div class="col-lg-8">
+    <p><a class="btn btn-info" href="{% url 'boards:post' %}" role="button">我有話要說</a></p>
+    <table class="table table-hover" id=myTable >
        <thead>
            <tr>
                <th>反應類別</th>
@@ -30,26 +33,54 @@
            {% endfor %}
        </tbody>
     </table>
-
+    </div>
+    
+    <div class="col-lg-4">
+        放AJAX
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+</div>
 {% endblock%}
 
 {% block scripts%}
-    <!--引用jQuery-->
+    
+    
+    <!-- 引用jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!--引用dataTables.js-->
+    
+    <!-- 引用dataTables.js -->
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
      
     <script type="text/javascript">
-        $(function () {
-
-            $(".table").DataTable({
-                searching: true, //關閉filter功能
-                columnDefs: [{
-                    targets: [3],
-                    orderable: false,
-                }]
-            });
-        });
+        $(document).ready(function(){
+            $(function(){
+                $("#myTable").DataTable(
+                    {
+                    searching: true,
+                    columnDefs: [{
+                        targets:[4,5],
+                        orderable: false,
+                        }],
+                    }
+                );
+            })
+        })
     </script>
+
+    
 {% endblock%}
 
