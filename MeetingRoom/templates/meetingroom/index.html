@@ -12,11 +12,11 @@
     <tbody>
         {% for room in rooms %}
         <tr>
-        <td> <img src="../media/{{room.5}}"></td>
+        <td> <img src="../media/{{room.5}}" class="img-fluid"></td>
         <td>{{room.1}}</td>
         <td>{{room.3}}</td>
         <td>{{room.4}}</td>
-        <td>#</td>
+        <td><a class="btn btn-info" href="../meetingroom/calendar" role="button">Go &raquo;</a></td>
         </tr>
         {% endfor %}
     </tbody>
