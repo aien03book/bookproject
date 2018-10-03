@@ -16,7 +16,7 @@
         <td>{{room.1}}</td>
         <td>{{room.3}}</td>
         <td>{{room.4}}</td>
-        <td><a class="btn btn-info" href="../meetingroom/calendar" role="button">Go &raquo;</a></td>
+        <td><a class="btn btn-warning" role="button" href="{% url 'meetingroom:calendar' room.0 %}"><i class="fas fa-pen-fancy"></i>預約</a></td>    
         </tr>
         {% endfor %}
     </tbody>

@@ -10,5 +10,7 @@ def index(request):
     mr =MR()
     rooms = mr.all
     return render(request,'meetingroom/index.html',locals())
-def calendar(request):
+def calendar(request,id):
     return render(request,'meetingroom/calendar.html',locals())
+def calendar1(request,id):
+    return render(request,'meetingroom/calendar1.html',locals())

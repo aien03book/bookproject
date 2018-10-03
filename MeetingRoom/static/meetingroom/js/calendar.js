@@ -38,7 +38,7 @@ function refreshDate(){
 		}else{
 			myclass = " class='darkgrey'"; //當該日期在今天之後，以深灰色顯示
 		}
-		str += "<li"+myclass+">"+i+"</li>"; //創建日期結點
+		str += "<li id=day"+myclass+">"+i+"</li>"; //創建日期結點
 	}
 	holder.innerHTML = str; //設置日期顯示
 	ctitle.innerHTML = month_name[my_month]; //設置月份顯示

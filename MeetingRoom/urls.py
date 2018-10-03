@@ -8,6 +8,7 @@ urlpatterns = [
     #views表示views.py的module
     #index表示views.py下的function
     path('',views.index,name="index"),  #urlName
-    path('calendar',views.calendar,name="calendar"),  
+    path('calendar/<int:id>',views.calendar,name="calendar"),  
+    path('calendar1/<int:id>',views.calendar1,name="calendar1"),  
     ]
     
