@@ -1,0 +1,40 @@
+{% extends "base.htm" %}
+{%load static%}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/meetingroom/css/calendar.css"
+<div class="calendar">
+    <div class="title">
+      <h1 class="green" id="calendar-title">Month</h1>
+      <h2 class="green small" id="calendar-year">Year</h2>
+      <a href="" id="prev">Prev Month</a>
+      <a href="" id="next">Next Month</a>
+    </div>
+    <div class="body">
+      <div class="lightgrey body-list">
+        <ul>
+          <li>MON</li>
+          <li>TUE</li>
+          <li>WED</li>
+          <li>THU</li>
+          <li>FRI</li>
+          <li>SAT</li>
+          <li>SUN</li>
+        </ul>
+      </div>
+      <div class="darkgrey body-list">
+        <ul id="days">
+        </ul>
+      </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script <script type="text/javascript" src="/static/meetingroom/js/calendar.js"></script>
+<script>
+  $(document).ready(function(){
+    $("li[class!='lightgrey']").on('click',function(){
+      alert("hi")
+    })
+  })
+</script>
+{% endblock %}
