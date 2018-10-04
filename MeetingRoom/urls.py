@@ -9,6 +9,6 @@ urlpatterns = [
     #index表示views.py下的function
     path('',views.index,name="index"),  #urlName
     path('calendar/<int:id>',views.calendar,name="calendar"),  
-    path('calendar1/<int:id>',views.calendar1,name="calendar1"),  
+    path('booking/',views.booking,name="booking"),  
     ]
     
