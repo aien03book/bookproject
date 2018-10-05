@@ -4,6 +4,7 @@
 <table class="table table-bordered">
        <thead class="thead-dark">
            <tr>
+               <th scope="col">編號</th>
                <th scope="col">姓名</th>
                <th scope="col">電子郵件</th>
                <th scope="col">密碼</th>
@@ -14,14 +15,17 @@
        </thead>
        <tbody>
            {% for member in members %}
-           <tr class="table-primary ">
-                <th scope="row">{{member.1}}</th>
+           <tr>
+               <td>__{{member.0}}__</td>
+               <td>{{member.1}}</td>
                <td>{{member.2}}</td>
                <td>{{member.3}}</td>
                <td>__{{member.4}}__</td>
                <td>
-                   <a class="btn btn-danger" role="button" href="{% url 'member:delete' member.0 %}"><i class="fas fa-trash"></i>刪除</a>
-                   </td><td><a class="btn btn-warning" role="button" href="{% url 'member:update' member.0 %}"><i class="fas fa-pen-fancy"></i>修改</a>
+                    <a href="{% url "member:delete" member.0 %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="{% url 'member:update' member.0 %}"><i class="fas fa-pen-fancy"></i></a>
                 </td>
            </tr>
           {% endfor %}

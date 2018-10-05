@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import connection
-from  member.models  import Members
+from member.models import Members
 from .modelsmember import Member
 import datetime
 from django.core import serializers
@@ -10,15 +10,15 @@ member = Member()
 
 # Create your views here.
 def index(request):  
-    title = "會員專區"
-    with connection.cursor() as cursor:
-        sql = """select * from members"""
-        cursor.execute(sql)
-        members = cursor.fetchall()
-    return render(request,'member/index.htm',locals())
+    title = "會員資料"
+    # with connection.cursor() as cursor:
+    #     sql = """select * from members"""
+    #     cursor.execute(sql)
+    #     members = cursor.fetchall()
+    # return render(request,'member/index.htm',locals())
     #呼叫方法
-    # members = member.all()
-    # return render(request,'member/index.html',locals())
+    members = member.all()
+    return render(request,'member/index.htm',locals())
 
 def login(request):  
     title = "會員登入"
@@ -46,7 +46,12 @@ def login(request):
         else:
             return HttpResponse("<script>alert('登入失敗');location.href='/member/login'</script>") 
     return render(request,'member/login.htm',locals())
-    
+
+def logout(request):
+    back = HttpResponse("<script>location.href='/'</script>")
+    back.delete_cookie('name')
+    return back
+
 def register(request):  
     title = "會員註冊"
     if request.method == "POST":
@@ -73,13 +78,12 @@ def register(request):
         
     return render(request,'member/register.htm',locals())
 
-
 def delete(request, id):
-    with connection.cursor() as cursor:
-        sql = """delete from members where id=%s"""
+    # with connection.cursor() as cursor:
+        # sql = """delete from members where id=%s"""
         #tuple
-        cursor.execute(sql,(id,))
-    # member.delete(id)
+        # cursor.execute(sql,(id,))
+    member.delete(id)
     return redirect("/member/")
     
 
@@ -114,14 +118,20 @@ def update(request, id):
     # membersingle = member.single(id)
     return render(request,'member/update.htm',locals())
 
-
-def hello(request):
-    return HttpResponse("<h1>helloAjax</h1>")
-
 def show(request):
     data=serializers.serialize("json",Members.objects.all())
     return HttpResponse(data,content_type="applications/json")
 
-def ajax(request):
-    return render(request,'member/ajax.htm')
+def checkname(request,name):
+    result = Members.objects.filter(name = name)
+    cm = "0"
+    if result:
+        cm = "1"
+    return HttpResponse(cm)
 
+def checkemail(request,email):
+    result = Members.objects.filter(email = email)
+    cm = "0"
+    if result:
+        cm = "1"
+    return HttpResponse(cm)

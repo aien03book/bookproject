@@ -27,6 +27,22 @@
                   <form class="form-inline my-2 my-lg-0">
                     <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                     <button class="btn btn-info" type="submit">Search</button> -->
+                    <ul class="navbar-nav">
+                      {% if request.COOKIES.name %}
+                      <span class="nav-link">{{ request.COOKIES.name }}您好</span>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url "member:logout" %}">點此登出</a>
+                        </li>
+                      {% else %}
+                      <!-- <span class="nav-link">請先</span> -->
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url "member:login" %}">先登入？</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url "member:register" %}">或註冊？</a>
+                      </li>
+                      {% endif %}
+                    </ul>
                   </form>
                 </div>
               </nav>

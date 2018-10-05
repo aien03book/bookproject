@@ -8,15 +8,12 @@
 from django.db import models
 
 
-
 class Members(models.Model):
     name = models.CharField(max_length=45)
-    email = models.CharField(max_length=50)
+    email = models.CharField(max_length=200)
     password = models.CharField(max_length=45)
     age = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'members'
-
-
