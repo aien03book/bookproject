@@ -1,6 +1,6 @@
 {% extends "base.htm" %}
 {%load static%}
-{% block content %}
+{% block main %}
 <table class="table">
     <thead class="thead-dark">
         <th scope="col">預覽</th>
@@ -12,7 +12,7 @@
     <tbody>
         {% for room in rooms %}
         <tr>
-        <td> <img src="../media/{{room.5}}" class="img-fluid"></td>
+        <td> <img src="../media/{{room.5}}" class="img-thumbnail"></td>
         <td>{{room.1}}</td>
         <td>{{room.3}}</td>
         <td>{{room.4}}</td>

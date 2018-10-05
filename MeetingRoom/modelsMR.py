@@ -6,4 +6,10 @@ class MR:
             cursor.execute("select * from meetingrooms")
             datas = cursor.fetchall()
         return datas
-
+    def single(self, id):
+        with connection.cursor() as cursor:
+            sql = """select * from meetingrooms where id=%s"""
+            #tuple
+            cursor.execute(sql,(id,))
+            data = cursor.fetchone()
+        return data
