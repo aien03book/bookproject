@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div id="cate01" class="d-inline p-2 bg-primary text-white">目前類別 :</div>
+        &nbsp&nbsp
+        <div id="bookid" class="d-inline p-2 bg-primary text-white">書籍編號 :</div>
+        <br><br>
+        <div class="form-group row">
+            <label for="inputbookname" class="col-sm-2 col-form-label">書&nbsp&nbsp名 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputbookname" placeholder="bookname" name="bookname" value="{{booksingle.3}}" maxlength="50">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputauthor" class="col-sm-2 col-form-label">作&nbsp&nbsp者 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputauthor" placeholder="author" name="author"  value="{{booksingle.4}}" maxlength="20" >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputissuedate" class="col-sm-2 col-form-label">發行日期 :</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="inputissuedate" placeholder="issuedate" name="issuedate" value="{{booksingle.5 | date:'Y-m-d'}}" min="1800-01-01">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputbuydate" class="col-sm-2 col-form-label">採購日期 :</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="inputbuydate" placeholder="buydate" name="buydate" value="{{booksingle.6 | date:'Y-m-d'}}" min="1800-01-01">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputwhoissue" class="col-sm-2 col-form-label">出 版 商 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="whoissue" placeholder="whoissue" name="whoissue" value="{{booksingle.7}}" maxlength="20">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="bookimg01" class="col-sm-2 col-form-label">封面圖片 :</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="bookimg01" placeholder="bookimg01" name="bookimg01" value="{{booksingle.8}}" maxlength="20">
+            </div>
+        </div>
+
+        <button id="btnupdate" class="btn btn-primary"><i class="fas fa-user-edit">修 改</i></button>
+
+    </form>
+   
+    <img id="img01" src="../media/{{booksingle.8}}" style="height:200px; width:200px; margin:0 200px; border:2px #d0d0d0 solid">
+
+    <script src="../static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../static/js/jquery.dataTables.min.js" type="text/javascript" ></script>
+    <script>
+
+    </script>
+    
+{% endblock %}

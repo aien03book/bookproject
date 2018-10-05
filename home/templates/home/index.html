@@ -1,0 +1,263 @@
+{% extends 'base.htm' %}
+{% load static %}
+{% block body %}
+
+<button class="btn btn-success">add <i class="fas fa-plus" id="btncreate"></i></button>
+    <div>
+        <table class="table table-striped" id="tblindex";>
+            <thead style="display:block;">
+                <tr style="text-align: center">
+                    <th hidden style="width:0%; text-align: center">id</button></th>
+                    <th style="width:13%; text-align: center">編&nbsp&nbsp號</button></th>
+                    <th style="width:34%; text-align: center">書&nbsp&nbsp名</button></th>
+                    <th style="width:10%; text-align: center">作&nbsp&nbsp者</button></th>
+                    <th style="width:10%; text-align: center">發行日期</button></th>
+                    <th style="width:10%; text-align: center">採購日期</button></th>
+                    <th style="width:10%; text-align: center">出 版 商</button></th>
+                    <th style="width:10%; text-align: center">書籍照片</button></th>                  
+                    <th style="width:13%; text-align: center">編&nbsp&nbsp輯</button></th>
+                </tr>
+            </thead>
+
+            <tbody style="height:650px; overflow:auto; display:block">
+            </tbody>
+        </table>
+    </div>
+
+<div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>                   
+
+<script src="../static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../static/js/jquery.dataTables.min.js" type="text/javascript" ></script>
+
+<script>
+    $(document).ready(function() {
+//*************** make a Bootstrape Table *********************
+        $("#tblindex").DataTable({
+            "order": [[1, "desc"]]
+        }); 
+//***********************讀取所有資料**********************************
+        function loadBookpool(){
+        $.getJSON('/api/bookpool/', function(bookpool){
+            var tb =  $('#tblindex>tbody');
+            var docFrag = $(document.createDocumentFragment())
+            $.each(bookpool, function(id, bookpool){
+                var cell0 = $('<td hidden style="text-align: center"></td>').text(bookpool.id)             
+                var cell1 = $('<td style="text-align: center"></td>').text(bookpool.bookid)
+                var cell2 = $('<td style="text-align: center"></td>').text(bookpool.bookname)
+                var cell3 = $('<td style="text-align: center"></td>').text(bookpool.author)
+                var cell4 = $('<td style="text-align: center"></td>').text(bookpool.issuedate)
+                var cell5 = $('<td style="text-align: center"></td>').text(bookpool.buydate)
+                var cell6 = $('<td style="text-align: center"></td>').text(bookpool.whoissue)
+
+                var img = $("<img/>").attr('src', "../media/" + bookpool.bookimg01).addClass("bookimgclass");
+                var cell7 = $('<td></td>').append(img)
+                var cell8 = $('<td></td>').html('<button class="btn btn-danger"><i class="far fa-trash-alt"></i></button><button class="btn btn-primary"><i class="fas fa-user-edit"></i></button>')
+
+                var row = $('<tr></tr>').append([cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8])
+                docFrag.append(row)
+            })
+            tb.html(docFrag)
+        })
+        }
+        loadBookpool()
+
+        $.ajax({
+            'url':'/api/bookpool/', 'type':'GET', 'dataType':'json'
+        })
+
+//**************************** 刪除資料 ******************************
+        $('#tblindex>tbody').on('click','button:nth-child(1)',function(){
+            var id = $(this).parents('tr').find('td:nth-child(1)').text()
+
+            $.ajax({
+                'url':'/api/bookpool/' + id + '/', 'type':'DELETE'
+            }).done(function(data){
+                loadBookpool()
+            })
+        })
+
+//************************** 新增資料 *******************************
+        $('button').click(function(){
+            window.open('create/',"title", "width=1040, height=720, top=50, left=200")   
+    //         var datas = {
+    //         "bookcate": $('#Inputcate').val(),
+    //         "bookid": $('#Inputbookid').val(),
+    //         "bookname": $('#Inputbookname').val(),
+    //         "author": $('#Inputauthor').val(),
+    //         "issuedate": $('#Inputissuedate').val(),
+    //         "buydate": $('#Inputbuydate').val(),
+    //         };
+
+        // $.post('/api/boolpool/',datas,function(data){
+        //     $('#InputTitle').val('')
+        //     $('#InputText').val('')
+        //     loadbookpool()
+        // })
+
+        })
+
+
+//****************************** 修  改 **********************************************
+        $('#tblindex>tbody').on('click','button:nth-child(2)',function(){
+            var id = $(this).parents('tr').find('td:nth-child(1)').text()
+            var bookid = $(this).parents('tr').find('td:nth-child(2)').text()
+            var bookcate = bookid.substr(0,2)
+
+            var bookname = $(this).parents('tr').find('td:nth-child(3)').text()
+            var author = $(this).parents('tr').find('td:nth-child(4)').text()
+            var issuedate = $(this).parents('tr').find('td:nth-child(5)').text()
+            var buydate = $(this).parents('tr').find('td:nth-child(6)').text()
+            var whoissue = $(this).parents('tr').find('td:nth-child(7)').text()
+            var bookimg01 = $(this).parents('tr').find('td:nth-child(8)').text()
+            var datas = {
+                "bookid": bookid, "bookcate":bookcate,"bookname": bookname, "author":author, "issuedate":issuedate,
+                "buydate":buydate, "whoissue":whoissue, "bookimg01":bookimg01,
+            };
+            // console.log(datas)
+            // var nw=window.open('update/'+id, "update", "width=1024, height=720, top=50, left=200")
+            // nw.document.write($("#cate01")="bookcate")
+            // $("#cate01").load('../home/update.html');
+            // $.post('update/'+id, datas)
+        // var nw=window.open('update/'+id,"update", "width=1024, height=720, top=50, left=200")
+        // $("#cate01").text()=1
+        // $.post(nw, function(datas) {
+        //     $newwindow.$("#cate01").text("bookcate")
+
+        // })
+        // $.post( "ajax/test.html", function( data ) {
+        //     $( ".result" ).html( data );
+        // });
+        // $('#btnupdate').on('click',function(){
+        //     var datas = {
+        //         "bookid": bookid, "bookname": bookname, "author":author, "issuedate":issuedate,
+        //         "buydate":buydate, "whoissue":whoissue, "bookimg01":bookimg01,
+        //     };
+
+        // $.ajax({
+        //     'url':'/api/bookpool/' + id + '/', 'type':'PUT', 'data':datas
+        // }).done(function(data){
+        //     loadbookpool()
+        // })
+        // })
+        })
+    });
+
+
+
+</script>
+{% endblock %}
+<!-- ****************************************************************** -->
+<!-- ************************************************************************* -->
+<!-- ****************************************************************** -->
+<!-- ************************************************************************* -->
+
+{%comment%}
+
+
+{% block scripts %}
+<script>
+$(document).ready(function(){
+
+
+ //讀取單筆資料
+    //    $.getJSON('/api/todo/1',function(todo){        
+    //         console.log(todo.id)
+    //         console.log(todo.title)
+    //         console.log(todo.text)        
+    //   })
+
+    // $('#todolist td>button:nth-child(1)').click(function(){
+    //   alert('click')
+    // })
+
+          //修改資料
+    $('#todolist>tbody').on('click','button:nth-child(2)',function(){
+         var id = $(this).parents('tr').find('td:nth-child(1)').text()
+         var title = $(this).parents('tr').find('td:nth-child(2)').text()
+         var text = $(this).parents('tr').find('td:nth-child(3)').text()
+         var datas = {
+            "title": title,
+            "text": text
+        };
+
+      $.ajax({
+          'url':'/api/todo/' + id + '/',
+          'type':'PUT',
+          'data':datas
+      }).done(function(data){
+        loadTodo()
+      })
+    })
+})
+
+// **************** show pictures ***************************************************
+$(document).ready(function() {
+
+$('#leftnav').load('partial/nav.html');
+
+
+$('#buttonAjax').click(function() {
+    //練習使用ajax()
+    //1. 呼叫travel.xml
+    //2. 讀出回傳xml格式中的景點圖片(Image)
+    //3. 將景點圖片顯示在show的div中
+    
+    $.ajax({
+        'type':'GET',
+        'url':'datas/travel.xml',
+        'dataType':'xml'
+    }).done(function(datas){
+        var docFragment = $(document.createDocumentFragment());
+        $(datas).find('Section').each(function(){
+            var imgPath = $(this).find('img:first').text();
+            var title = $(this).find('img:first').attr("description");
+            var img = $("<img />").attr('src',imgPath).addClass('col-md-4 img-responsive img-thumbnail');
+            var a = $("<a></a>").attr({'href':imgPath,'data-lightbox':'park','data-title':title}).append(img);
+            docFragment.append(a);
+        })
+        $('#show').append(docFragment);
+    })
+
+});
+ 
+ $('#buttonJSONP').click(function () {
+        //練習JSONP
+    //呼叫同一個server上的程式 OK
+    // $.getJSON('datas/jsonhandler.json', function (datas) {
+    //    $('#show').html("<h2>" + datas[1].name + "</h2>");
+    // })
+        
+//呼叫另外一個server上的程式會失敗
+         // $.getJSON('https://html5api.azurewebsites.net/jsonhandler.ashx', function (datas) {
+         //    $('#show').html("<h2>" + datas[1].name + "</h2>");
+         // })
+
+//需要改用JSONP的寫法才會成功
+//https://html5api.azurewebsites.net/jsonphandler.ashx?callback=handler
+ $.ajax({
+    url: "https://html5api.azurewebsites.net/jsonphandler.ashx",
+    dataType: "jsonp"
+ }).done(function(datas){
+       $('#show').html("<h2>" + datas[1].name + "</h2>");
+ });
+
+})
+    
+    $('#buttonCORS').click(function () {
+         //呼叫另外一個server上的程式會失敗
+        $.getJSON('https://html5api.azurewebsites.net/jsonhandler.ashx', function (datas) {
+            $('#show').html("<h2>" + datas[1].name + "</h2>");
+        })
+        //需要改用CORS的寫法才會成功
+        //https://html5api.azurewebsites.net/corsjsonhandler.ashx
+        // $.getJSON('https://html5api.azurewebsites.net/corsjsonhandler.ashx', function (datas) {
+        //     $('#show').html("<h2>" + datas[1].name + "</h2>");
+        // })
+    })
+});
+
+</script>
+
+{% endblock %}
+{%endcomment%}

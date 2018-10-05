@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'bookbor',
     'MeetingRoom',
     'boards',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -129,5 +130,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Steve 1st commit
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
