@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block body %}
+<form method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" >類&nbsp&nbsp別</label>
+            </div>
+            <select class="custom-select" id="inputselect" name="inputselect">
+            </select>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputbookid" class="col-sm-2 col-form-label">書籍(自動)編號 : </label>
+            <div id="inputbookid" class="alert alert-dark" role="alert"></div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputbookname" class="col-sm-2 col-form-label">書&nbsp&nbsp名 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputbookname" placeholder="bookname" name="bookname"  maxlength="50">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputauthor" class="col-sm-2 col-form-label">作&nbsp&nbsp者 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputauthor" placeholder="author" name="author"   maxlength="20" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputissuedate" class="col-sm-2 col-form-label">發行日期 :</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="inputissuedate" placeholder="issuedate" name="issuedate" min="1800-01-01">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputbuydate" class="col-sm-2 col-form-label">採購日期 :</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="inputbuydate" placeholder="buydate" name="buydate" min="1800-01-01">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputwhoissue" class="col-sm-2 col-form-label">出 版 商 :</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="whoissue" placeholder="whoissue" name="whoissue" maxlength="20">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="bookimg01" class="col-sm-2 col-form-label">封面圖片 :</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="bookimg01" placeholder="bookimg01" name="bookimg01" maxlength="20">
+            </div>
+        </div>
+
+        <button id="btncreate" class="btn btn-primary"><i class="fab fa-angellist">新 增</i></button>
+
+    </form>
+
+    <script src="../static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../static/js/jquery.dataTables.min.js" type="text/javascript" ></script>
+<script>
+
+//***********************讀取 select 資料**********************************
+$(document).ready(function() {
+    function loadBookcate(){    
+        $.getJSON('/api/bookcate/', function(bookcate){
+            var Opt =  $('#inputselect');
+            $.each(bookcate, function(id, bookcate){      
+                var cell1 = $('<option></option>').text(bookcate.bookcate+bookcate.discription)
+                Opt.append(cell1)
+            })
+        })
+    }
+    loadBookcate()
+
+    $.ajax({
+        'url':'/api/bookcate/', 'type':'GET', 'dataType':'json',
+        'data':'orderby=' + bookcate,
+        // 'data':'order=-createdAt','orderby='+column_name+'&order='+column_order,
+    })
+//***********************自動產生 booknumber 流水號**********************************
+    $('select').change(function(){
+        $.getJSON('/api/bookpool/', function(bookpool){
+            var newcate=$('option:selected').val().substr(0,2)
+            var nblist=[]
+            $.each(bookpool, function(id, bookpool){
+                if (bookpool.bookid.substr(0,2) == newcate){
+                    nblist.push(parseInt(bookpool.bookid.substr(2,15)));
+                }
+            })
+            // alert(isNaN(nblist))
+            if (nblist == false){
+                var idnumber = 1
+            }else{
+                var idnumber = parseInt((Math.max.apply(Math, nblist)))+1
+            }
+            var bookid = idnumber.toString()
+            // alert(idnumber)
+
+            addzero = 13-bookid.length
+            alert(addzero)
+            for (i = 0; i < addzero; i++) {
+                // alert(bookid) 
+                bookid = '0'+bookid
+            }
+            bookid = newcate + bookid
+            alert(bookid)
+            $('#inputbookid').text(bookid)
+        })
+        $.ajax({
+            'url':'/api/bookpool/', 'type':'GET', 'dataType':'json'
+        })
+    })
+    
+//***********************新增到資料庫**********************************
+    $('#btncreate').click(function(){
+        var bookcate = $('option:selected').val().substr(0,2)
+        var datas = {
+            "bookcate": bookcate,
+            "bookid": bookcate+$('#inputbookid').val(),
+            "bookname": $('#inputbookname').val(),
+            "author": $('#inputauthor').val(),
+            "issuedate": $('#inputissuedate').val(),
+            "buydate": $('#inputbuydate').val(),
+            "whoissue": $('#inputwhoissue').val(),
+            "bookimg01": $('#inputbookimg01').val(),
+        };
+        alert("book id :" + datas["bookid"]+datas["bookimg01"])
+
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+
+        $.post('/api/bookpool/',datas,function(data){
+
+        })
+    })
+});
+
+</script>    
+
+{% endblock %}

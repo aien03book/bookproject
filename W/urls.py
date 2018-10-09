@@ -26,4 +26,9 @@ urlpatterns = [
     path('bookbor/',include('bookbor.urls')),
     path('meetingroom/',include('MeetingRoom.urls')),
     path('boards/',include('boards.urls')),
+<<<<<<< HEAD
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+=======
+    path('home/',include('home.urls')),
+]
+>>>>>>> Steve 1st commit
