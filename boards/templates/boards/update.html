@@ -1,0 +1,29 @@
+{% extends "base.htm" %}
+
+{% block main %}
+
+
+<form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group row">
+              <label for="select1" >反應事項類別</label>
+                    <select id="select1" name="boardid" class="form-control">
+                       
+                        <option>{{ post.board }}</option>                       
+                    </select>
+            </div>
+            
+            <div class="form-group row">
+                <label for="message" >反應內容</label>
+                  <textarea class="form-control" id="meassage" name="message" >{{ post.message }}</textarea>
+            </div>
+                       
+            <div class="form-group row">
+              <div><a class="btn btn-info" href="{% url 'boards:site' %}" role="button">返回上一頁</a></div>
+              <button style="margin-left:120px;"type="submit" class="btn btn-primary"><i class="fab fa-angellist"></i> 更新</button>
+                  
+            </div>
+</form>
+
+{% endblock %}

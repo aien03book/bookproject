@@ -1,0 +1,87 @@
+{% extends "base.htm" %}
+{% block content %}
+    <!-- <form method="POST" action="/member/login/"> -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-2 col-form-label">姓名</label>
+                <div class="col-sm-10">
+                 <input type="text" class="form-control" id="inputName" placeholder="Name" name="name">
+                </div>
+                <div class="alert alert-primary" id="cn"></div>
+              </div>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">電子郵件</label>
+                <div class="col-sm-10">
+                 <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                </div>
+              </div>
+              <div class="alert alert-primary" id="ce"></div>
+            </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">密碼</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputCheckPassword" class="col-sm-2 col-form-label">確認密碼</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputCheckPassword" placeholder="Password" name="checkpassword">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputAge" class="col-sm-2 col-form-label">年紀</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="inputAge" placeholder="Age" name="age" min="1" max="99">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPhone" class="col-sm-2 col-form-label">聯絡電話</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputPhone" placeholder="Phone" name="Phone">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputAddress" class="col-sm-2 col-form-label">聯絡地址</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputAddress" placeholder="Adress" name="Adress">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary"><i class="fab fa-angellist"></i> 註冊</button>
+                </div>
+              </div>
+        </form>
+        <hr />
+        
+
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $("#inputEmail").blur(function(){
+        var ce = $(this).val()
+        $.get("../check/" + ce + "/",function(checkemail){
+          if (checkemail == "1"){
+            $("#ce").text("信箱已註冊，請換一個！")
+          }else{
+            $("#ce").text("可以註冊使用！")
+          }
+        })
+      })
+      $("#inputName").blur(function(){
+        var cn = $(this).val()
+        $.get("../check/" + cn + "/", function(checkname){
+          if (checkname == "1"){
+            $("#cn").text("名稱已使用!")
+          }else{
+            $("#cn").text("名稱可使用!")
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

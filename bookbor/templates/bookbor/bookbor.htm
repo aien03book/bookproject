@@ -1,0 +1,42 @@
+{% extends "base.htm" %}
+{% block main %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>書名</th>
+            <th>作者</th>
+            <th>出版日期</th>
+            <th>出版社</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for book in bookall %}
+        <tr>
+            <td>{{book.bookname}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.issuedate}}</td>
+            <td>{{book.publisher}}</td>
+            <td><a href='{% url "bookbor:bookinfo1" book.bookname  %}'>借閱</a>
+                <a href='{% url "bookbor:update" book.id %}'>修改</a>
+            </td> 
+        </tr>        
+       {% endfor %}
+       
+    </tbody>
+</table>
+
+       <div>
+            <a href="{%url 'bookbor:add' %}"><button type="button" class="btn btn-outline-secondary" style="margin-right:10px;margin-top:8px">新增書籍</button></a> 
+            
+        </div>
+      
+
+{% endblock%} 
+{% block scripts%}
+   
+
+
+
+{% endblock%}

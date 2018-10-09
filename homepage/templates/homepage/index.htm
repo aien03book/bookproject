@@ -1,0 +1,66 @@
+{%extends "base.htm"%}
+{%block checkin%}
+
+<!-- <img src="http://placehold.it/110x110/9c27b0/fff?text=Dilip" class="img-fluid" /> -->
+
+<h3 href="#">我要登入</h3>
+<p>CheckIn</p>
+<p>進出入記錄登記與查詢，<br>用功記錄看的見。</p>
+<p><a class="btn btn-info" href="member/login/"" role="button">Go &raquo;</a></p>
+<!-- now = datetime.datetime.now()
+現在時間 {{ now|date:'Y/m/d H:i' }} -->
+{% endblock %}
+
+{%block roombook%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>會議室預約</h3>
+<p>Meeting Room</p>
+<p>討論室使用查詢、預約討論室，<br>讓小組討論更有效率。</p>
+<p><a class="btn btn-info" href="meetingroom/" role="button">Go &raquo;</a></p>
+{% endblock %}
+
+{%block news%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>最新活動</h3>
+<p>News and Activities</p>
+<p>第一時間掌握館內活動訊息，<br>不錯過好康活動。</p>
+<p><a  class="btn btn-info" href="#" role="button">Go &raquo;</a></p>
+{% endblock %} 
+
+{%block bookreservation%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>書籍借閱</h3>
+<p>Book Resevation</p>
+<p>新書資訊都在這，網路預約，線下借書，<br>書籍借閱管理平台。</p>
+<p><a class="btn btn-info" href="#" role="button">Go &raquo;</a></p>
+                    
+{% endblock %}
+
+{%block contact%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>與我們聯繫</h3>
+<p>Contact Us</p>
+<p>有任何想法都可以跟我們說喔，<br>我們會認真看你們的問題。</p>
+                        <p><a class="btn btn-info" href="{% url 'boards:site' %}" role="button">Go &raquo;</a></p>
+{% endblock %}
+
+{%block ourteam%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>開發團隊</h3>
+<p>Who We Are</p>
+<p>想知道我們是誰嗎，點進來就知道惹<br></p>
+                        <br>
+                        <p><a class="btn btn-info" href="ourteam/" role="button">Go &raquo;</a></p>
+{% endblock %}
+
+{%block ourstory%}
+{% load static %}
+<!-- <img src="http://placehold.it/110x110/e91e63/fff?text=Dilip" class="img-fluid" />      -->
+<h3>歷史沿革</h3>
+<p>Our Story</p>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.htm" %}
+{% block main %}
+  
+
+<div class="container">
+        <div class="row" style="border:dotted 1px black;width:1200px;height: 600px;">
+          <div class="col-md">
+                <img class="img-thumbnail" src="..\..\static\images\icon_book.jpg" >
+          </div>
+          <div class="col-md"style="padding-right:100px">
+            <dl>
+            <br>
+            <dt>圖書</dt>    
+            <br>
+            <dt>{{bookname}}</dt>  
+                <dd>作者：{{author}}</dd>
+                <dd>出版社：{{publisher}}</dd>
+                <dd>出版日期：{{issuedate}}</dd>                
+                <dd>ISBN: {{ISBN}}</dd>
+                <br><dd style="width:600px;">
+                    本書描述:
+                    <br>{{description}}
+                     
+                </dd></dl>
+                <dl><a href="{%url "bookbor:bookbor"  bookname %}">借閱</a>
+                    <a href="#">收藏</a>
+                    <a href="{%url "bookbor:add" %}">推薦購買</a></dl>
+          </div>
+        
+          
+          <div class="row">
+               
+            <div class="col-md">
+                    
+            <pre>  容易閱讀，適合我這初學者的Python入門書，習題也不難。推薦 !!! <a href="https://www.books.com.tw/products/0010690075?gclid=Cj0KCQjwof3cBRD9ARIsAP8x70PRkbbwNDma7bbKCKdsLNcW5vA8JMJLH_LTmfQtcfSoqURG_WJS67EaAkEUEALw_wcB">more</a></pre>
+            </div>         
+         </div>
+      </div>
+    {% endblock%}
+{% block scripts %}
+
+<script>
+
+</script>
+
+{% endblock %} 

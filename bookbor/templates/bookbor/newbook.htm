@@ -1,0 +1,58 @@
+{% extends "base.htm" %}
+{% block main %}
+<form method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+<table class="table table-bordered" style="width:800px">
+    
+        <div class="form-group row">
+                <label for="inputName" class="col-sm-2 col-form-label">書名</label>
+                <div class="col-sm-10">
+                 <input type="text" class="form-control" id="bookname" placeholder="bookname" name="bookname">
+                </div>
+              </div>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-sm-2 col-form-label">作者</label>
+                <div class="col-sm-10">
+                 <input type="text" class="form-control" id="author" placeholder="author" name="author">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">出版日期</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="issuedate" placeholder="issuedate" name="issuedate">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputAge" class="col-sm-2 col-form-label">出版社</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="publisher" placeholder="publisher" name="publisher">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputAge" class="col-sm-2 col-form-label">ISBN</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="ISBN" placeholder="ISBN" name="ISBN" >
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="file1" class="col-sm-2 col-form-label">書籍圖片</label>
+                <div class="col-sm-10">
+                  <input type="file" class="form-control" id="file1" placeholder="product image" name="bookimage">
+                </div>
+              </div>
+             
+              <div class="form-group row">
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-outline-dark"><i class="far fa-plus-square"></i> 新增</button>
+                    </div>
+                  </div>
+   
+</form>
+{% endblock%} 
+
+{% block scripts%}
+   
+
+
+
+{% endblock%}

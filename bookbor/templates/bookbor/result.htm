@@ -1,0 +1,28 @@
+{% extends "base.htm" %}
+{% block main %}
+<table class="table table-bordered" style="width:800px">
+    <thead>
+        <tr>
+            <th>書名</th>
+            <th>作者</th>
+            <th>出版日期</th>
+            <th>出版社</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in bookall %}
+        <tr>
+            <td>{{book.2}}</td>
+            <td>{{book.3}}</td>
+            <td>{{book.4}}</td>
+            <td>{{book.6}}</td>
+            <td>借閱</td>
+            
+        </tr>
+       {% endfor %}
+    </tbody>
+</table>
+
+{% endblock%} 
+{% block scripts%}

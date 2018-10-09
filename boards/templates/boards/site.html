@@ -1,0 +1,86 @@
+{% extends "base.htm" %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+    <div class="col-lg-8">
+    <p><a class="btn btn-info" href="{% url 'boards:post' %}" role="button">我有話要說</a></p>
+    <table class="table table-hover" id=myTable >
+       <thead>
+           <tr>
+               <th>反應類別</th>
+               <th>反應內容</th>
+               <th>反應時間</th>
+               <th>反應者</th>
+               <th>刪除</th>
+               <th>修改</th>
+           </tr>
+       </thead>
+       <tbody>
+           {% for p in posts %}
+           <tr>
+               <td>{{ p.board }}</td>
+               <td>{{ p.message }}</td>
+               <td>{{ p.createdat }}</td>
+               <td>{{ p.createdby }}</td>
+               <td><a class="btn btn-danger" role="button" href="{% url 'boards:remove' p.postid %}"><i class="fas fa-trash"></i>刪除</a></td> 
+               <td><a class="btn btn-warning" role="button" href="{% url 'boards:update' p.postid %}"><i class="fas fa-pen-fancy"></i>修改</a></td>
+           </tr>
+           {% endfor %}
+       </tbody>
+    </table>
+    </div>
+    
+    <div class="col-lg-4">
+        放AJAX
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+</div>
+{% endblock%}
+
+{% block scripts%}
+    
+    
+    <!-- 引用jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
+    <!-- 引用dataTables.js -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+     
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(function(){
+                $("#myTable").DataTable(
+                    {
+                    searching: true,
+                    columnDefs: [{
+                        targets:[4,5],
+                        orderable: false,
+                        }],
+                    }
+                );
+            })
+        })
+    </script>
+
+    
+{% endblock%}
+

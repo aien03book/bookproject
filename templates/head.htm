@@ -1,0 +1,51 @@
+<header class="container mb-3">
+        <nav  class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"  >
+                <a class="navbar-brand" href="#">Lib</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+          
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url "homepage:index" %}"">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">更多</a>
+                      <div class="dropdown-menu" aria-labelledby="More">
+
+                        <a class="dropdown-item" href="{% url "member:register" %}">註冊會員</a>
+                        <a class="dropdown-item" href="{% url "member:login" %}">會員登入</a>   
+                        <a class="dropdown-item" href="{% url "homepage:ourteam" %}">我們的團隊</a>
+                        <a class="dropdown-item" href="{% url "meetingroom:index" %}">活動室</a>
+                        
+                        <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                      </div>
+                    </li>
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                    <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-info" type="submit">Search</button> -->
+                    <ul class="navbar-nav">
+                      {% if request.COOKIES.name %}
+                      <span class="nav-link">{{ request.COOKIES.name }}您好</span>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url "member:logout" %}">點此登出</a>
+                        </li>
+                      {% else %}
+                      <!-- <span class="nav-link">請先</span> -->
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url "member:login" %}">先登入？</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url "member:register" %}">或註冊？</a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </form>
+                </div>
+              </nav>
+              
+              
+</header>

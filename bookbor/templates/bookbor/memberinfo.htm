@@ -1,0 +1,91 @@
+{% extends "base.htm" %}
+{% load static %}
+{% block main %}
+<style>
+</style>
+
+<table class="table" id="memberInfo">
+    <thead class="thead-dark" >
+      <tr>
+        <th scope="col" name="memberNo">會員號</th>
+        <th scope="col" name="memberName">姓名</th>
+        <th scope="col" name="Email">Email</th>
+        <th scope="col" name="phone">電話</th>
+        <th scope="col" name="Email">註冊日期</th>
+        <th scope="col" name="Email">目前借書數量</th>
+        <th scope="col" name="Email">總借書數量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row" id='memberidA'>{{memberId}}</td>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td></td>
+        <td>{{joindate}}</td>
+        <td></td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+  <table class="table" >
+    <thead class="thead-light" id="bookInfohead">
+      <tr> 
+        <th scope="col">序號</th>
+        <th scope="col">書名</th>
+        <th scope="col">借閱日期</th>
+        <th scope="col">還書日期</th>
+        <th scope="col">狀態</th>
+      </tr>
+    </thead>
+    <tbody id="bookInfobody">      
+    </tbody>
+  </table>
+{% endblock%}
+{% block scripts %}
+<script>
+  // var memberInfo=$('#memberInfo td')
+  var bookInfo=$('#bookInfobody')//分別將要輸入的表格建立物件\
+  // memberInfo.empty()
+  bookInfo.empty()//將物件清空
+  var bookinfodocument=$(document.createDocumentFragment())//建立一個新的document物件
+  // var memberId=$('#memberInfo tr').find('td:nth-child(1)').val()
+    // 
+  $(document).ready(function(){
+        var memberId=$('#memberidA').text()
+        console.log(memberId)
+        
+      function loadmemberbooksearch(){
+      $.get('/bookbor/member_bookinfo/'+ memberId +'/',function(bookrecords){
+        // console.log(bookrecords)
+        $.each(bookrecords, function(i, bookrecord) {
+          // console.log(bookrecord)
+          // console.log(i)
+          var bookid=bookrecord.fields.bookid
+          var borrowtime=bookrecord.fields.borrowtime
+          var returntime=bookrecord.fields.returntime
+          // var borrowtime=bookrecord.fields.borrowtime
+          console.log(celbookid,celborrowtime,celreturntime,celstatus)
+
+          var celoder=$("<td></td>").text(i+1)
+          var celbookid=$("<td></td>").text(bookid)
+          var celborrowtime=$("<td></td>").text(borrowtime)
+          var celreturntime=$("<td></td>").text(returntime)
+          var celstatus=$("<td></td>").text(" ")
+          console.log(typeof(returntime))
+          var rowbookinfo=$("<tr></tr>").append([celoder,celbookid,celborrowtime,celreturntime,celstatus])
+          bookinfodocument.append(rowbookinfo)});
+          bookInfo.html(bookinfodocument)
+        
+      } 
+      )} 
+  loadmemberbooksearch()
+  
+
+
+}) 
+
+// }  
+</script>
+{% endblock%} 
