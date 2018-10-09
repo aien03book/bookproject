@@ -1,0 +1,179 @@
+{% extends "base.htm" %}
+{% block styles %}
+{%load static%}
+<style>
+    body {
+        padding-top: 15px;
+        font-size: 12px
+      }
+      .main {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .login-or {
+        position: relative;
+        font-size: 18px;
+        color: #aaa;
+        margin-top: 10px;
+                margin-bottom: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .span-or {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: -2px;
+        margin-left: -25px;
+        background-color: #fff;
+        width: 50px;
+        text-align: center;
+      }
+      .hr-or {
+        background-color: #cdcdcd;
+        height: 1px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+      }
+      h3 {
+        text-align: center;
+        line-height: 300%;
+      }
+
+
+
+
+</style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <input type="text">
+            <input type="button" class="btn btn-primary" id="btn1" value="click">
+            <input type="button" class="btn btn-danger" id="btn2" value="cancel">
+           
+            <img id="img1" src="{% static "images/ajax-loader.gif" %}"  style="display:none" />
+            <div class="s1" id="message" class="alert alert-primary">server回應的資料會出現在這裡</div>
+            <hr />
+            <h2>{{ title }} From Template</h2>  <!--<h2>MyHome Form Template</h2>-->
+            <p>{{ desc }}</p>
+            <p>現在時間 {{ now|date:'Y/m/d H:i' }} </p>
+            <ul>
+                {% for user in datas %}
+                  <li>{{user.name}} - {{user.email}}</li>
+                {% endfor %}
+            </ul>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>age</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                        {% for user in datas|dictsortreversed:'age' %}
+                        {% if user.age > 30%}
+                        <tr class="table-danger"> 
+                        {% else %}
+                        <tr>
+                        {% endif %}
+                        <td>{{user.name}}</td>
+                        <td>{{user.age}}</td>
+                        <td>{{user.email}}</td>
+                       
+                    </tr>
+                        {% endfor%}
+                    
+                </tbody>
+            </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 找到要執行的按鈕
+//   var btn=document.selector("#btn1")
+//       img=document.selector("#img1")
+// // 綁定執行
+//   btn.addEventlistener("click",load) 
+//   function load(){
+// //  建立物件
+//     var xmr=new XMLHttpRequest()
+// //判斷是不是IE7以上
+//     if (xmr !=null){
+//   // ajax開始執行
+//       xml.addEventlistener("loadstart",function(){
+//         img.style.display('inline')
+//         btn.value  = "loading..."
+//         btn.setAttribute("disabled","disabled")
+//       })
+//       xml.addEventlistener("loadend",function(){
+//         img.style.dislpay('none')
+//         btn.value='click'
+//         btn.removeAttribute("disabled")
+//       })
+//     // 對server發出要求(request)
+//       xml.open('GET','/hello') //設定
+//       xml.send() // 根據open設定正式對server端產生請求
+//     //接受response的結果
+//       xml.addEventListener('load',function(){
+//         var xml="";
+//         if (xml.status==200){
+//           data=xml.responseText//以上為讀取資料
+//         }
+//         else{
+//           data=xml.status +":" +xml.responseText
+//           }
+        
+  
+  // 顯示資料
+    //     var mydiv=document.querySelector("#message")
+    //   mydiva.innerHTML="<h1>" + data+ "</h1>" })}
+
+    // else{
+    //   alert("不支援")
+    // }}
+    var emps = [
+        {"name":"Eric","age":30},
+        {"name":"Mary","age":28},
+        {"name":"Tom","age":33}
+    ];
+
+//emps -> array
+//emps[1] -> object {"name":"Mary","age":28}
+//emps[1].name -> Mary
+for(var i=0,max=emps.length;i<max;i++){
+    console.log(emps[i].name)
+    console.log(emps[i].age)
+}
+
+var data = {"emps":[
+        {"name":"Eric","age":30,"contact":{"cell":"0911222333","home":"01-22223333"}},
+        {"name":"Mary","age":28,"contact":{"cell":"0911222333","home":"01-22223333"}},
+        {"name":"Tom","age":33,"contact":{"cell":"0911222333","home":"01-22223333"}}
+    ]};
+console.log(data)
+var str = JSON.stringify(data)
+console.log(temp)
+console.log(JSON.parse(str))
+
+
+$('#btn_captcha').click(function () {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/member/captcha");
+    xhr.responseType = "arraybuffer";
+    xhr.addEventListener("load",function(event) {
+      var blob = new Blob([xhr.response], {type: "image/png"});
+      var imageUrl = window.URL.createObjectURL(blob);   
+      $('#img_captcha').attr('src',imageUrl)
+    });
+    xhr.send();    
+  })
+
+  
+ 
+</script>
+
+
+{%endblock%}

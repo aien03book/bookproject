@@ -1,14 +1,25 @@
 {% extends "base.htm" %}
 
 {% block styles %}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<style> input[type=text] {
+    float: left;
+    padding: 6px;
+    border: 1px solid blue;
+    margin-right: 6px;
+    font-size: 17px;
+}
+</style>
 {% endblock %}
 
 {% block main %}
 <div class="container">
-    <div class="row">
-    <div class="col-lg-8">
-    <p><a class="btn btn-info" href="{% url 'boards:post' %}" role="button">我有話要說</a></p>
+    
+    <div>
+        <p><input type="text" id="searchbar" placeholder="請輸入欲搜尋的留言內容"><a class="btn btn-info" id="searchone" role="button" style="color:white"><i class="fas fa-search">搜尋</i></a>
+        
+        <a class="btn btn-info" href="{% url 'boards:post' %}" role="button" style="float:right" id="post">我有話要說</a></p>
+    </div>
+    
     <table class="table table-hover" id=myTable >
        <thead>
            <tr>
@@ -21,64 +32,127 @@
            </tr>
        </thead>
        <tbody>
-           {% for p in posts %}
-           <tr>
-               <td>{{ p.board }}</td>
-               <td>{{ p.message }}</td>
-               <td>{{ p.createdat }}</td>
-               <td>{{ p.createdby }}</td>
-               <td><a class="btn btn-danger" role="button" href="{% url 'boards:remove' p.postid %}"><i class="fas fa-trash"></i>刪除</a></td> 
-               <td><a class="btn btn-warning" role="button" href="{% url 'boards:update' p.postid %}"><i class="fas fa-pen-fancy"></i>修改</a></td>
-           </tr>
-           {% endfor %}
+<!-- 用jQuery動態產生表格，顯示所有留言內容 -->
        </tbody>
     </table>
     </div>
-    
-    <div class="col-lg-4">
-        放AJAX
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="container">
     </div>
-    
 </div>
-</div>
+
 {% endblock%}
 
 {% block scripts%}
-    
-    
-    <!-- 引用jQuery -->
+
+<!-- 引用jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    
-    <!-- 引用dataTables.js -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-     
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(function(){
-                $("#myTable").DataTable(
-                    {
-                    searching: true,
-                    columnDefs: [{
-                        targets:[4,5],
-                        orderable: false,
-                        }],
-                    }
-                );
+    <!-- 引用jQuery cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script>
+$(document).ready(function(){
+
+//定義一個叫做searchall的function 
+    function searchall(){
+      $.get('../api/post/',function(datas){
+          var tb =  $('#myTable>tbody');
+          var docFrag = $(document.createDocumentFragment())
+          $.each(datas,function(idx,todo){
+              var cell1 = $('<td></td>').text(todo.postid).hide()
+              var cell2 = $('<td></td>').text(todo.boardname)
+              var cell3 = $('<td></td>').text(todo.message)
+              var cell4 = $('<td></td>').text(todo.createdat)
+              var cell5 = $('<td></td>').text(todo.membername)
+              var cell6 = $('<td></td>').html('<button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>')
+              var cell7 = $('<td></td>').html('<button class="btn btn-warning"><i class="fas fa-pen-fancy"></i></button>')
+              var row = $('<tr></tr>').append([cell1,cell2,cell3,cell4,cell5,cell6,cell7])
+              docFrag.append(row)
+          })
+          tb.html(docFrag)
+      })
+    }
+//用searchall這個function來顯示所有留言    
+    searchall()
+
+//針對特定內容搜尋
+$('#searchone').on('click',function(){
+        var search = $('#searchbar').val()
+        if (search == null || search == undefined || search == ""){
+            alert('您未輸入任何查詢條件，請重新輸入。');
+            searchall()
+        }else{
+            function searchone(){
+        $.getJSON('../api/post/?search='+search,function(datas){
+          if (datas.length==0){
+            alert('很抱歉，沒有符合您欲查詢的資料，請重新輸入。');
+            searchall();  
+          }else{
+          $('#myTable>tbody>tr').remove()  //把tbody下的內容(tr)都清空
+          var tb =  $('#myTable>tbody');
+          var docFrag = $(document.createDocumentFragment())
+          $.each(datas,function(idx,todo){
+              var cell1 = $('<td></td>').text(todo.postid).hide()
+              var cell2 = $('<td></td>').text(todo.boardname)
+              var cell3 = $('<td></td>').text(todo.message)
+              var cell4 = $('<td></td>').text(todo.createdat)
+              var cell5 = $('<td></td>').text(todo.membername)
+              var cell6 = $('<td></td>').html('<button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>')
+              var cell7 = $('<td></td>').html('<button class="btn btn-warning"><i class="fas fa-pen-fancy"></i></button>')
+              var row = $('<tr></tr>').append([cell1,cell2,cell3,cell4,cell5,cell6,cell7])
+              docFrag.append(row)
+          })
+          tb.html(docFrag)
+        }
+      })
+        }
+        searchone()
+        }
+
+    })
+
+
+//點擊刪除鈕
+        $('#myTable>tbody').on('click','td:nth-child(6)',function(){
+         var id = $(this).parents('tr').find('td:nth-child(1)').text()
+         var cookieValue = Cookies.get("name")
+         if (cookieValue){
+            $.get("./checkid/" + id ,function(data){
+                if(data == "True"){
+                    $.ajax({
+                'url':'../api/post/' + id ,
+                'type':'DELETE'
+            }).done(function(data){
+              searchall()
             })
-        })
+                 }else{
+                        alert('您非反應者，無法刪除此留言。')}
+         })
+        }else{
+            theUrl = window.location.pathname
+            alert('刪除留言前，請先登入');
+            location.href='/member/login/?url=' + theUrl
+         }
+    })
+
+//點擊修改鈕
+    $('#myTable>tbody').on('click','td:nth-child(7)',function(){
+         var id = $(this).parents('tr').find('td:nth-child(1)').text()
+         var cookieValue = Cookies.get("name")
+         if (cookieValue){
+            $.get("./checkid/" + id ,function(data){
+                if(data == "True"){
+                    window.location.href = "update/" +id
+                 }else{
+                        alert('您非反應者，無法修改此留言。')}
+         })
+        }else{
+            theUrl = window.location.pathname
+            alert('修改留言前，請先登入');
+            location.href='/member/login/?url=' + theUrl
+         }
+    })
+
+})
     </script>
 
     

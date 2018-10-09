@@ -1,0 +1,81 @@
+{% extends "base.htm" %}
+{% block main %}
+<div><a href="{% url "bookbor:find" %}">現在可借書目</a></div>
+
+
+<div><input type="text" >
+<input type="submit" class="btn btn-primary" id="btn1" value="查找">
+<p id="message"></p>  </div>
+<table class="table table-bordered" style="width:800px">
+    <thead>
+        <tr>
+            <th>書名</th>
+            <th>作者</th>
+            <th>出版日期</th>
+            <th>出版社</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tba">
+       
+        
+            
+    </tbody>
+</table>
+
+{% endblock%} 
+  
+{% block scripts %}
+
+<script>
+var tba = $("#tba");
+tba.empty();
+var aaa = $(document.createDocumentFragment());   
+$(document).ready(function(){
+    $('#btn1').click(function(){
+        var name=$('input[type="text"]').val()
+            
+        $.get('/bookbor/search/'+name+'/',function(data){
+            console.log(data)
+            
+                         
+                for (var i=0;i<data.length;i++)
+                    var cell1 = $("<td></td>").text(data[i].fields.bookname);
+                        var row = $('<tr></tr>').append([cell1]);
+                    aaa.append(row);});
+                    tba.append(aaa);}); 
+            })
+     
+                
+
+                
+				
+				
+			// 	$.each(data.data, function(i, book) {
+			// 		console.log(book.bookname);
+			// // 		
+			// 		var cell2 = $("<td></td>").text(product.ProductName);
+			// 		var cell3 = $("<td></td>").text(product.UnitPrice);
+			// 		var cell4 = $("<td></td>").text(product.UnitsInStock);
+
+					
+
+					
+				
+				    
+
+            
+            
+            
+            // $('#message').html(data)
+          
+            // $.each(result,function(index,value){
+            //     console.log(value)
+           
+        // })
+//     })
+// })
+
+</script>
+
+{% endblock %} 

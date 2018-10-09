@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'MeetingRoom',
     'boards',   
     'home',
+    'todo',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,113 @@
+{% extends "base.htm" %}
+{% block main %}
+
+
+<div class="input-group mb-1">
+    <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="Recipient's username" aria-describedby="basic-addon1" style="height:50px;width:80%">
+        <div class="input-group-append">
+          <button  class="btn btn-outline-secondary" type="submit" id ="btn1"> <i  class="fas fa-search"></i></button>
+        </div>
+</div>
+<div></div>
+<!-- 以上為搜索欄 -->
+
+<!-- 以下為搜尋結果的空表格 -->
+<div class="table table-striped" >
+    <table id ="searchBook" style="height:50px;">
+<div class="input-group mb-1">
+    <thead id="thd"></thead>
+</div>
+<div class="input-group mb-1">
+    <tbody id="tba"></tbody>
+    <em>現在時間 {{ current_time }}</em>
+</div>
+</table>
+</div>
+<div>
+<hr>
+ <span>
+<div>熱門：<a href="{% url "bookbor:find" %}">館藏查詢</a> <a href="#">借書</a> <a href="{% url "bookbor:find" %}">熱門新書</a>  <a href="#"p>書籍預約</a> 
+<table class="table">             
+</div>
+</div> 
+   <div>
+        <a href="#"><button type="button" class="btn btn-outline-secondary" style="margin-right:10px;margin-top:20px" ;>新書搶先看</button></a>
+        <a href="#"><button type="button" class="btn btn-outline-secondary" style="margin-right:10px;margin-top:20px">借閱排行榜</button></a>
+        <a href="#"><button type="button" class="btn btn-outline-secondary" style="margin-right:10px;margin-top:20px">我要登入</button></a>
+        <a href="#"><button type="button" class="btn btn-outline-secondary" style="margin-right:10px;margin-top:20px">其他服務</button></a>   
+              
+         
+        
+       
+   </div>
+</span>
+{% endblock%} 
+  
+{% block scripts %}
+
+<script>
+var tba = $("#tba");
+var thd =$("#thd")
+tba.empty();
+thd.empty();
+var empDocument = $(document.createDocumentFragment()); 
+var empDocument1 =$(document.createDocumentFragment());
+$(document).ready(function(){
+    //找到輸入字的資料(模糊搜尋)
+    $('#btn1').click(function(){
+        var name=$('input[type="text"]').val()
+        //到數據庫找到所有符合條件的資訊
+    function loadSearch(){           
+        $.get('/bookbor/search/'+name+'/',function(data){
+            console.log(data)
+            
+            var head1=$('<th></th>').text("書名")
+            var head2=$('<th></th>').text("作者")
+            var head3=$('<th></th>').text("出版日期")
+            var head4=$('<th></th>').text("出版社")
+            var head5=$('<th></th>').text("編輯")
+            var rowh=$('<tr></tr>').append([head1,head2,head3,head4,head5])
+            empDocument1.append(rowh);
+            //將每一筆資料讀出，並放入表格中
+            $.each(data, function(i, books) {
+                var bookName=books.fields.bookname
+                var bookAuthor=books.fields.author
+                var bookIssuedate=books.fields.issuedate
+                var bookPublisher=books.fields.publisher
+					console.log(bookName);
+                var cel1=$("<td></td>").text(bookName);
+                var cel2=$("<td></td>").text(bookAuthor);
+                var cel3=$("<td></td>").text(bookIssuedate);
+                var cel4=$("<td></td>").text(bookPublisher);  
+                var cel5=$("<td></td>").html('<a href=/bookinfo1/><button class="btn btn-info" ><i class="fas fa-book"></i></button></a>');              
+                var row = $('<tr></tr>').append([cel1,cel2,cel3,cel4,cel5]);
+                empDocument.append([row]);})
+                tba.html(empDocument);
+                thd.html(empDocument1)           
+            })
+    } 
+    loadSearch()
+    $('#searchBook>tbody').on('click','button:nth-child(2)',function(){
+        var bookname=$(this).parents('tr').find('td:nth-child(1)').text()
+        var bookAuthor=$(this).parents('tr').find('td:nth-child(2)').text()
+        var bookIssuedate=$(this).parents('tr').find('td:nth-child(3)').text()
+        var bookPublisher=$(this).parents('tr').find('td:nth-child(4)').text()
+        var datas={
+            "bookname":bookname,
+            "bookAuthor":bookAuthor,
+            "bookIssuedate":bookIssuedate,
+            "bookPublisher":bookPublisher,            
+        }
+        console.log(bookname)        
+        console.log(datas),
+        location.href='/bookbor/bookinfo/'+ bookname +'/';
+        })
+        
+        })  
+    
+})
+
+
+</script>
+
+{% endblock %} 

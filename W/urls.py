@@ -18,6 +18,15 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+#以下嘗試製作restful API
+from boards import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'members',views.MembersViewSet)
+router.register(r'board',views.BoardViewSet)
+router.register(r'post',views.PostViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +36,5 @@ urlpatterns = [
     path('meetingroom/',include('MeetingRoom.urls')),
     path('boards/',include('boards.urls')),
     path('home/',include('home.urls')),
+    path('api/',include(router.urls)),
 ]
