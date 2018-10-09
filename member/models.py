@@ -10,18 +10,13 @@ from django.db import models
 
 class Members(models.Model):
     name = models.CharField(max_length=45)
-    email = models.CharField(max_length=200)
+    email = models.CharField(max_length=50)
     password = models.CharField(max_length=45)
     age = models.IntegerField(blank=True, null=True)
     memberid = models.CharField(max_length=45, blank=True, null=True)
     joindate = models.DateTimeField(blank=True, null=True)
     def __str__(self):  # 增加代码
         return self.name   # 增加代码
-    
     class Meta:
         managed = False
         db_table = 'members'
-
-
-
-    
