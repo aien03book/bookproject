@@ -22,7 +22,7 @@ urlpatterns = [
     path('show/',views.show),
      #http://localhost:8000/member/update/1
     path('checkin/', views.index, name="index"),
-    path('check/<str:name>/',views.checkname,name="checkname"),
-    path('check/<str:email>/',views.checkemail,name="checkemail"),
+    path('checkN/<str:name>/',views.checkname,name="checkname"),
+    path('checkM/<str:email>/',views.checkemail,name="checkemail"),
   
 ]

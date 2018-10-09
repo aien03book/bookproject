@@ -21,7 +21,7 @@ def index(request):
     return render(request,'member/index.htm',locals())
 
 def login(request):  
-    title = "會員登入"
+    # title = "會員登入"
     if request.method =="POST":
         email = request.POST["email"]    
         password = request.POST["password"] 
@@ -53,7 +53,7 @@ def logout(request):
     return back
 
 def register(request):  
-    title = "會員註冊"
+    # title = "會員註冊"
     if request.method == "POST":
         #接收表單傳過來的資料
         name = request.POST["name"]
@@ -72,7 +72,7 @@ def register(request):
             # _member = (name,email,password,age)
             # member.create(_member)
             #轉到會員的首頁上
-            return redirect("/member/")
+            return redirect("/")
         else:
             return HttpResponse("<script>alert('驗證密碼不符');location.href='/member/register'</script>") 
         
