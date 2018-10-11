@@ -66,19 +66,20 @@ def register(request):
         email = request.POST["email"]  #w124@gmail.com
         password = request.POST["password"]  
         age = request.POST["age"]
-        
-
-        #將資料寫進資料庫
-        with connection.cursor() as cursor:
-            sql = """insert into members(name,email,password,age)
-                     values(%s,%s,%s,%s)"""
-            #tuple
-            cursor.execute(sql,(name,email,password,age))
-        # _member = (name,email,password,age)
-        # member.create(_member)
-        #轉到會員的首頁上
-        return redirect("/member/")
-   
+        checkpassword = request.POST["Cpassword"]
+        if password == checkpassword:
+            #將資料寫進資料庫
+            with connection.cursor() as cursor:
+                sql = """insert into members(name,email,password,age)
+                        values(%s,%s,%s,%s)"""
+                #tuple
+                cursor.execute(sql,(name,email,password,age))
+            # _member = (name,email,password,age)
+            # member.create(_member)
+            #轉到會員的首頁上
+            return redirect("/")
+        else:
+            return HttpResponse("<script>alert('驗證密碼不符');location.href='/member/register'</script>")
         
     return render(request,'member/register.htm',locals())
 
@@ -160,3 +161,17 @@ def logout(request):
     back = HttpResponse("<script>location.href='/'</script>")
     back.delete_cookie('name')
     return back
+
+def checkname(request,name):
+    result = Members.objects.filter(name = name)
+    cm = "0"
+    if result:
+        cm = "1"
+    return HttpResponse(cm)
+
+def checkemail(request,email):
+    result = Members.objects.filter(email = email)
+    cm = "0"
+    if result:
+        cm = "1"
+    return HttpResponse(cm)

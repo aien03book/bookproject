@@ -31,5 +31,6 @@ urlpatterns = [
     path('captcha/', views.captcha, name="captcha"),
     
     path('logout/',views.logout,name="logout"),
-  
+    path('checkN/<str:name>/',views.checkname,name="checkname"),
+    path('checkM/<str:email>/',views.checkemail,name="checkemail"),
 ]

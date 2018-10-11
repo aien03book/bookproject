@@ -9,12 +9,12 @@
 
         <div >
         <div class="form-group row">
-        <label for="inputName" >姓名</label>          
+        <label for="inputName" >姓名<a id="cn" class="btn btn-warning btn-sm active" role="button" aria-pressed="true"><i class="fas fa-user-check"></i></a></label>          
         <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" value="{{select.1}} " >
         </div>
         
         <div class="form-group row" >
-        <label for="inputEmail" >電子郵件</label>          
+        <label for="inputEmail" >電子郵件<a id="ce" class="btn btn-warning btn-sm active" role="button" aria-pressed="true"><i class="fas fa-at"></i></a></label>          
         <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" value="{{select.2}}">
         </div>
 
@@ -22,12 +22,21 @@
         <label for="inputPassword">密碼</label>
         <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password"value="{{select.3}}">
         </div>
+
+        <div class="form-group row">
+          <label for="inputCPassword">確認密碼</label>
+          <input type="password" class="form-control" id="inputCPassword" placeholder="Password" name="Cpassword">
+          </div>
+
         <div class="form-group row">
         <label for="inputAge" >年紀</label>
         <input type="number" class="form-control" id="inputAge" placeholder="Age" name="age" value="{{select.4}}">
         </div>
         <div class="form-group row">
-        <button type="submit" class="btn btn-outline-secondary" >註冊<i class="fas fa-user-friends"></i></button>
+          <label><input type="checkbox" id="contract">我願意遵守</label><a href="#">圖書館使用規章</a>
+        </div>
+        <div class="form-group row">
+        <button type="submit" class="btn btn-outline-secondary" id="ca" disabled="disabled">註冊<i class="fas fa-user-friends"></i></button>
         </div>
         <div class="form-group row"><p>若已有帳號請<a href="{% url "member:login" %}">登入</a></p></span>
         </div>
@@ -39,6 +48,39 @@
 
    
     
+  
     
-    
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      $("#inputEmail").blur(function(){
+        var ce = $(this).val()
+        $.get("../checkM/" + ce + "/",function(checkemail){
+          if (checkemail == "1"){
+            $("#ce").removeClass("btn-warning").addClass("btn-danger").text("信箱已註冊，請換一個！")
+          }else{
+            $("#ce").removeClass("btn-warning").addClass("btn-primary").text("可以註冊使用！") 
+          }
+        })
+      })
+      $("#inputName").blur(function(){
+        var cn = $(this).val()
+        $.get("../checkN/" + cn + "/", function(checkname){
+          if (checkname == "1"){
+            $("#cn").removeClass("btn-warning").addClass("btn-danger").text("名稱已使用!")
+          }else{
+            $("#cn").removeClass("btn-warning").addClass("btn-primary").text("名稱可使用!")
+          }
+        })
+      })
+      $("#contract").click(function(){
+        $("#ca").prop("disabled", false) 
+        // if ($(this) == true){
+        // $("#ca").prop("disabled", false)
+        // }else{
+        //   $("#ca").prop("disabled", true)
+      })
+    })
+  </script>
 {% endblock %}
