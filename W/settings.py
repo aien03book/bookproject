@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'boards',   
     'home',
     'todo',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
