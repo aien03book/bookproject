@@ -1,19 +1,26 @@
-{% extends "base.html" %}
-{% block body %}
-<form method="POST"  enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" >類&nbsp&nbsp別</label>
-            </div>
-            <select class="custom-select" id="inputselect" name="inputselect">
+{% extends "base.htm" %}
+{% block main %}
+<form method="POST"  enctype="multipart/form-data" style= "width:100%">
+{% csrf_token %}
+<fieldset style="border:1px solid #acd6ff; border-radius:15px; padding:30px">
+<legend style="width:80px">&nbsp&nbsp新 增</legend>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" >類&nbsp&nbsp別 :</label>
+            <select class="custom-select" id="selected" name="selected">
+                <!-- input by ajax -->
             </select>
         </div>
 
+        <!-- <div class="form-group row"> -->
+            <!-- <label for="autobookid" class="col-sm-2 col-form-label">(自動)編號 : </label> -->
+            <!-- <div class="col-sm-10"> -->
+                <input hidden type="text" id="autobookid" name="bookid">
+            <!-- </div> -->
+        <!-- </div> -->
+
         <div class="form-group row">
-            <label for="inputbookid" class="col-sm-2 col-form-label">書籍(自動)編號 : </label>
-            <div id="inputbookid" class="alert alert-dark" role="alert"></div>
+            <label for="show" class="col-sm-2 col-form-label">(自動)編號 : </label>
+            <div id="showId" class="alert alert-danger" role="alert"></div>
         </div>
 
         <div class="form-group row">
@@ -44,21 +51,25 @@
         <div class="form-group row">
             <label for="inputwhoissue" class="col-sm-2 col-form-label">出 版 商 :</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="whoissue" placeholder="whoissue" name="whoissue" maxlength="20">
+                <input type="text" class="form-control" id="inputwhoissue" placeholder="whoissue" name="whoissue" maxlength="20">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="bookimg01" class="col-sm-2 col-form-label">封面圖片 :</label>
+            <label for="inputbookimg01" class="col-sm-2 col-form-label">封面圖片 :</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="bookimg01" placeholder="bookimg01" name="bookimg01" maxlength="20">
+                <input type="file" class="form-control" id="inputbookimg01" placeholder="bookimg01" name="bookimg01" maxlength="20">
             </div>
         </div>
-
-        <button id="btncreate" class="btn btn-primary"><i class="fab fa-angellist">新 增</i></button>
-
+</fieldset>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button id="btncreate" type="submit" class="btn btn-primary btn-lg"><i class="fab fa-angellist"> 新&nbsp增</i></button>
+            </div>
+        </div>
     </form>
-
+{% endblock %}    
+{% block scripts %}
     <script src="../static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../static/js/jquery.dataTables.min.js" type="text/javascript" ></script>
@@ -67,79 +78,79 @@
 //***********************讀取 select 資料**********************************
 $(document).ready(function() {
     function loadBookcate(){    
-        $.getJSON('/api/bookcate/', function(bookcate){
-            var Opt =  $('#inputselect');
-            $.each(bookcate, function(id, bookcate){      
-                var cell1 = $('<option></option>').text(bookcate.bookcate+bookcate.discription)
-                Opt.append(cell1)
+        $.getJSON('/home/api/bookcate/', function(bookcate){
+            $.each(bookcate, function(id, bookcate){ 
+                if (id==0){
+                    var cell1 = $('<option selected="selected"></option>').val(bookcate.bookcate).text(bookcate.bookcate+bookcate.discription) 
+                }else{    
+                var cell1 = $('<option></option>').val(bookcate.bookcate).text(bookcate.bookcate+bookcate.discription)
+                }
+                $('#selected').append(cell1)
             })
         })
     }
     loadBookcate()
 
-    $.ajax({
-        'url':'/api/bookcate/', 'type':'GET', 'dataType':'json',
-        'data':'orderby=' + bookcate,
-        // 'data':'order=-createdAt','orderby='+column_name+'&order='+column_order,
-    })
 //***********************自動產生 booknumber 流水號**********************************
-    $('select').change(function(){
-        $.getJSON('/api/bookpool/', function(bookpool){
-            var newcate=$('option:selected').val().substr(0,2)
-            var nblist=[]
-            $.each(bookpool, function(id, bookpool){
-                if (bookpool.bookid.substr(0,2) == newcate){
-                    nblist.push(parseInt(bookpool.bookid.substr(2,15)));
+    function autobookid(){ 
+        $('select option:selected ').ready(function(){
+            $.getJSON('/home/api/bookpool/', function(bookpool){
+                var newcate=$('option:selected').val()
+                // alert(newcate)
+                var nblist=[]
+                $.each(bookpool, function(id, bookpool){
+                    if (bookpool.bookid.substr(0,2) == newcate){
+                        nblist.push(parseInt(bookpool.bookid.substr(2,15)));
+                    }
+                })
+
+                if (nblist == false){
+                    var bookid = "0000000000001"
+                }else{
+                    var bookid = (parseInt((Math.max.apply(Math, nblist)))+1).toString()
                 }
+
+                while (bookid.length < 13) {
+                    bookid = '0'+bookid;
+                }
+                // alert(newcate + bookid)
+                $('#autobookid').val(newcate + bookid).text(newcate + bookid)
+                $('#showId').text(newcate + bookid)
             })
-            // alert(isNaN(nblist))
-            if (nblist == false){
-                var idnumber = 1
-            }else{
-                var idnumber = parseInt((Math.max.apply(Math, nblist)))+1
-            }
-            var bookid = idnumber.toString()
-            // alert(idnumber)
-
-            addzero = 13-bookid.length
-            alert(addzero)
-            for (i = 0; i < addzero; i++) {
-                // alert(bookid) 
-                bookid = '0'+bookid
-            }
-            bookid = newcate + bookid
-            alert(bookid)
-            $('#inputbookid').text(bookid)
         })
-        $.ajax({
-            'url':'/api/bookpool/', 'type':'GET', 'dataType':'json'
-        })
+    }
+    autobookid()
+    $('select').click(function(){
+        autobookid()
     })
-    
+}); 
 //***********************新增到資料庫**********************************
-    $('#btncreate').click(function(){
-        var bookcate = $('option:selected').val().substr(0,2)
-        var datas = {
-            "bookcate": bookcate,
-            "bookid": bookcate+$('#inputbookid').val(),
-            "bookname": $('#inputbookname').val(),
-            "author": $('#inputauthor').val(),
-            "issuedate": $('#inputissuedate').val(),
-            "buydate": $('#inputbuydate').val(),
-            "whoissue": $('#inputwhoissue').val(),
-            "bookimg01": $('#inputbookimg01').val(),
-        };
-        alert("book id :" + datas["bookid"]+datas["bookimg01"])
+//     $('#btncreate').click(function(){
+//         var datas = {
+//             "bookcate": $('option:selected').val(),
+//             "bookid": $('#inputbookid').text(),
+//             "bookname": $('#inputbookname').val(),
+//             "author": $('#inputauthor').val(),
+//             "issuedate": $('#inputissuedate').val(),
+//             "buydate": $('#inputbuydate').val(),
+//             "whoissue": $('#inputwhoissue').val(),
+//             "bookimg01": $('#inputbookimg01').val(),
+//         };
+// alert(datas["bookcate"])
+//         $.ajax({
+//             'url':'/api/bookpool/', 
+//             'type':'POST', 
+//             'dataType':'json', 
+//             'data':datas
+//         });
 
-        $.ajaxSetup({
-            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-        });
+        // $.post('/api/bookpool/', datas, function(data){
+        //     // $.ajax({
+        //     //     'url':'/api/bookpool/', 'type':'POST', 'dataType':'json'
+        //     // })
+        // });
+    // });
 
-        $.post('/api/bookpool/',datas,function(data){
-
-        })
-    })
-});
 
 </script>    
 

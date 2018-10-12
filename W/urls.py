@@ -33,8 +33,8 @@ urlpatterns = [
     path('',include('homepage.urls')),
     path('member/',include('member.urls')),
     path('bookbor/',include('bookbor.urls')),
-    path('meetingroom/',include('MeetingRoom.urls')),
+    path('conferance/',include('conferance.urls')),
     path('boards/',include('boards.urls')),
     path('home/',include('home.urls')),
     path('api/',include(router.urls)),
-]
+]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

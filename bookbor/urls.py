@@ -14,7 +14,7 @@ urlpatterns = [
     path('add/',views.add,name="add"),
     path('search/<str:name>/',views.search,name="search"),
     path('update/<int:id>/',views.update,name="update"),
-    path('memberinfo/<str:memberId>/',views.memberinfo,name="memberinfo"),
+    path('memberinfo/<str:memberid1>/',views.memberinfo,name="memberinfo"),
     path('member_bookinfo/<str:memberId>/',views.member_bookinfo,name="member_bookinfo"),
-    
+    path('scraw/',views.scraw,name="scraw"),
     ]

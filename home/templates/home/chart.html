@@ -1,0 +1,82 @@
+{% extends "base.htm" %}
+{% block main %}
+<div id="chartContainer" style="height: 600px; width: 100%;"></div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fab fa-angellist"></i>離 開</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}    
+{% block scripts %}
+    <script src="/static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/static/js/jquery.dataTables.min.js" type="text/javascript" ></script>
+    <script src="/static/js/jquery.canvasjs.min.js" type="text/javascript" ></script>
+    <script>
+//********************************** Canvas ******************************
+    window.onload = function () {
+        var dataPoints = [];
+        var chart = new CanvasJS.Chart("chartContainer",{
+            title:{text: "書籍類別統計"},
+            subtitles:[{text: "依書籍類別統計書籍數量"}],
+            data: [{
+                type: "column",
+                // dataPoints : dataPoints,
+                dataPoints: [
+                { label: "A1文學",  y: 5  },
+                { label: "C1電腦", y: 12  },
+                { label: "E1教育", y: 3  },
+                { label: "F1美食",  y: 5  },
+                { label: "T1旅遊",  y: 10  }
+                ]
+            }]
+        });
+        // $.getJSON('/home/api/bookpool/', function(bookpool) {
+        //     $.each(bookpool, function(id, bookpool){
+        //         // alert(bookpool.bookcate)
+        //         dataPoints.push({x: bookpool.id, y: 6});
+        //         // dataPoints.push({x: bookpool.cate, y: 6});
+        //     });	
+            
+        // });
+        chart.render();
+    }
+
+
+
+
+
+// $.getJSON('/api/bookpool/', function(bookpool){
+//             $.each(bookpool, function(id, bookpool){   
+//                 var dataPoints=[]     
+//                 var key = bookpool.bookcate
+//                 datas=[{label : "key", y : 1}]
+//                     // alert(datas)
+//             })
+//         })
+
+//         // alert(datas)
+//         var chart = new CanvasJS.Chart("chartContainer", {
+//             theme: "light1", // "light2", "dark1", "dark2"
+//             animationEnabled: true, // change to true		
+//             title:{text: "書籍類別統計"},
+//             subtitles:[{text: "依書籍類別統計書籍數量"}],
+//             data: [{
+//                 type: "column",  // Change type to "bar", "area", "spline", "pie",etc.
+
+//                 dataPoints: [
+//                 { label: "A1文學",  y: 5  },
+//                 { label: "C1電腦", y: 12  },
+//                 { label: "E1教育", y: 3  },
+//                 { label: "F1美食",  y: 5  },
+//                 { label: "T1旅遊",  y: 10  }
+//                 ]
+//             }]
+//         });
+//         chart.render();
+    </script>
+    
+{% endblock %}

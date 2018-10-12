@@ -37,10 +37,11 @@ def login(request):
                 if 'url' in request.GET:
                     theUrl=request.GET["url"]
                 else:
-                    theUrl=["/"]
+                    theUrl="/"
                 name=theMember[0]['name']
-                memberId=theid[0]['memberid']
-                # id1=id1[0]['id']
+                memberId=theid[0]['memberid']                
+                id1=id1[0]['id']
+                print(id1,name,memberId)
                 response= HttpResponse("<script>alert('登入成功');location.href='" + theUrl+ "'</script>")
                 remember = None
                 if 'remember' in request.POST.keys():
@@ -50,7 +51,7 @@ def login(request):
                 else:    
                     response.set_cookie('name',name)
                     response.set_cookie('memberId',memberId)
-                    # response.set_cookie('id1',id1)
+                    response.set_cookie('id1',id1)
                 return response
             else:
                 return HttpResponse("<script>alert('登入失敗');location.href='/member/login'</script>")
@@ -66,20 +67,19 @@ def register(request):
         email = request.POST["email"]  #w124@gmail.com
         password = request.POST["password"]  
         age = request.POST["age"]
-        checkpassword = request.POST["Cpassword"]
-        if password == checkpassword:
-            #將資料寫進資料庫
-            with connection.cursor() as cursor:
-                sql = """insert into members(name,email,password,age)
-                        values(%s,%s,%s,%s)"""
-                #tuple
-                cursor.execute(sql,(name,email,password,age))
-            # _member = (name,email,password,age)
-            # member.create(_member)
-            #轉到會員的首頁上
-            return redirect("/")
-        else:
-            return HttpResponse("<script>alert('驗證密碼不符');location.href='/member/register'</script>")
+        
+
+        #將資料寫進資料庫
+        with connection.cursor() as cursor:
+            sql = """insert into members(name,email,password,age)
+                     values(%s,%s,%s,%s)"""
+            #tuple
+            cursor.execute(sql,(name,email,password,age))
+        # _member = (name,email,password,age)
+        # member.create(_member)
+        #轉到會員的首頁上
+        return redirect("/member/")
+   
         
     return render(request,'member/register.htm',locals())
 
@@ -158,20 +158,7 @@ def captcha(request):
     return response
 
 def logout(request):
-    back = HttpResponse("<script>location.href='/'</script>")
-    back.delete_cookie('name')
-    return back
-
-def checkname(request,name):
-    result = Members.objects.filter(name = name)
-    cm = "0"
-    if result:
-        cm = "1"
-    return HttpResponse(cm)
-
-def checkemail(request,email):
-    result = Members.objects.filter(email = email)
-    cm = "0"
-    if result:
-        cm = "1"
-    return HttpResponse(cm)
+    response = HttpResponse('<script>location.href="/"</script>')
+    response.delete_cookie('name')
+    # return render(request,'home.html',locals())
+    return response

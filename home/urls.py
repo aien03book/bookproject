@@ -23,12 +23,13 @@ urlpatterns = [
     # path('contact/',views.contact,name="contact"),
     path('main/',views.main),
     #http://localhost:8000/member/delete/1
-    # path('delete/<int:id>',views.delete,name="delete"),
+    path('delete/<int:id>',views.delete,name="delete"),
 
     # http://localhost:8000/member/update/1
 
     path('update/<int:id>', views.update, name="update"),
     path('create/', views.create, name="create"),
+    path('chart/', views.chart, name="chart"),
     # path('show/<int:id>', views.show, name="show"),
 
     path('api/', include(router.urls)),

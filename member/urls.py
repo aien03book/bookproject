@@ -10,7 +10,8 @@ urlpatterns = [
     #views表示views.py的module
     #index表示views.py下的function
     #http://localhost:8000/member/login
-    path('login/',views.login,name="login"),    
+    path('login/',views.login,name="login"), 
+    path('logout/',views.logout,name="logout"),    
     #http://localhost:8000/member/register
     path('register/',views.register,name="register"),
 
@@ -30,7 +31,6 @@ urlpatterns = [
     #http://localhost:8000/member/captcha/
     path('captcha/', views.captcha, name="captcha"),
     
-    path('logout/',views.logout,name="logout"),
-    path('checkN/<str:name>/',views.checkname,name="checkname"),
-    path('checkM/<str:email>/',views.checkemail,name="checkemail"),
+    
+  
 ]

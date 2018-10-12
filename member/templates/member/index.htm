@@ -21,7 +21,8 @@
                <td>
                     <a href="{% url "bookbor:memberinfo" member.0 %}"><button type="button" class="btn btn-outline-info">資訊</button></a>
                    <a href="{% url "member:update" member.0 %}"><button type="button" class="btn btn-outline-dark">修改</button></a>
-                   <a href="{% url "member:delete" member.0 %}"><button type="button" class="btn btn-outline-danger">刪除</button></a>
+                   <a href="{% url "member:update" member.0 %}"><button type="button" class="btn btn-outline-danger">刪除</button></a>
+                   <a href="{% url "member:delete" member.0 %}"></a>
                 </td>
            </tr>
           {% endfor %}

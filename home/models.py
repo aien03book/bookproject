@@ -84,7 +84,8 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 class Bookcate(models.Model):
-    bookcate = models.CharField(max_length=2)
+    id = models.CharField(max_length=4)
+    bookcate = models.CharField(primary_key=True, max_length=2)
     discription = models.CharField(max_length=45)
 
     class Meta:
@@ -103,7 +104,7 @@ class Bookpool(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bookpool'
+        db_table = 'bookpool1'
 
 
 class DjangoAdminLog(models.Model):

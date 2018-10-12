@@ -1,0 +1,31 @@
+{% extends 'base.htm' %}
+
+
+
+{% block main %}
+    <table class="table table-bordered">
+    <tr>
+        <td>日期</td>
+        <td>預約人</td>
+        <td>會議室</td>
+        <td>取消預約</td>
+    </tr>
+    {% for i in order %}
+    <tr>
+        <td>{{ i.time }}</td>
+        <td>{{ i.user }}</td>
+        <td>{{ i.room }}</td>
+        <td>
+            
+            <a href="{% url 'conferance:delete' room.id i.id %}">取消</a>
+            <a href="{% url 'conferance:update' room.id i.id %}">修改</a>
+           
+        </td>
+     </tr>
+     {% endfor %}
+    </table>
+
+    <br>
+    <a href="{% url 'conferance:add' room.id %}" class="btn btn-info" role="button">預約</a>
+    <a class="btn btn-info" href="{% url 'conferance:list' %}" role="button">返回列表</a></div>
+{% endblock %}

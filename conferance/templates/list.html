@@ -1,0 +1,15 @@
+{% extends 'base.htm' %}
+
+
+
+{% block main %}
+    <h1>閱覽室列表</h1>
+    <table class="table">
+    {% for i in room %}
+    <tr>
+        <td><a href="{% url 'conferance:appointment' i.id %}"><img src="/media/{{i.img}}" class="img-thumbnail"></a></td>
+
+    </tr>
+    {% endfor %}
+    </table>
+    {% endblock %}

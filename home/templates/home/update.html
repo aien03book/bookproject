@@ -1,13 +1,18 @@
-{% extends "base.html" %}
-{% load static %}
-{% block body %}
-    <form method="POST" enctype="multipart/form-data">
+{% extends "base.htm" %}
+{% block main %}
+    <form method="POST" enctype="multipart/form-data" style= "width:100%">
         {% csrf_token %}
 
-        <div id="cate01" class="d-inline p-2 bg-primary text-white">目前類別 :</div>
-        &nbsp&nbsp
-        <div id="bookid" class="d-inline p-2 bg-primary text-white">書籍編號 :</div>
-        <br><br>
+        <div class="form-group row">
+            <label for="inputbookcate" class="col-sm-2 col-form-label">類&nbsp&nbsp別 : </label>
+            <div id="inputbookcate" class="alert alert-danger" role="alert">{{booksingle.1}}&nbsp{{booksingle.11}}</div>
+
+            <label for="inputbookid" class="col-sm-2 col-form-label">編&nbsp&nbsp號 : </label>
+            <div id="inputbookid" class="alert alert-danger" role="alert">{{booksingle.2}}</div>
+        </div>
+
+        <fieldset style="border:1px solid #acd6ff; border-radius:15px; padding:30px">
+            <legend style="width:80px">&nbsp&nbsp修 改</legend>
         <div class="form-group row">
             <label for="inputbookname" class="col-sm-2 col-form-label">書&nbsp&nbsp名 :</label>
             <div class="col-sm-10">
@@ -49,13 +54,32 @@
                 <input type="file" class="form-control" id="bookimg01" placeholder="bookimg01" name="bookimg01" value="{{booksingle.8}}" maxlength="20">
             </div>
         </div>
+        </fieldset>
 
-        <button id="btnupdate" class="btn btn-primary"><i class="fas fa-user-edit">修 改</i></button>
-
+        <br>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fab fa-angellist"></i>{{btntext}}</button>
+            </div>
+        </div>
     </form>
-   
-    <img id="img01" src="../media/{{booksingle.8}}" style="height:200px; width:200px; margin:0 200px; border:2px #d0d0d0 solid">
 
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <img id="img01" src="/media/{{booksingle.8}}" style="height:200px; width:200px; border:2px #d0d0d0 solid">
+        </div> 
+        <div class="col-md-3">
+            <img id="img01" src="/media/{{booksingle.8}}" style="height:200px; width:200px; border:2px #d0d0d0 solid">
+        </div>
+        <div class="col-md-3">
+            <img id="img01" src="/media/{{booksingle.8}}" style="height:200px; width:200px; border:2px #d0d0d0 solid">
+        </div>
+        <div class="col-md-3">
+            <img id="img01" src="/media/{{booksingle.8}}" style="height:200px; width:200px; border:2px #d0d0d0 solid">
+        </div>
+    </div>    
+{% endblock %}    
+{% block scripts %}   
     <script src="../static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="../static/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../static/js/jquery.dataTables.min.js" type="text/javascript" ></script>

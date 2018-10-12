@@ -12,7 +12,7 @@ class Book:
     #讀出所有資料
     def all(self):
         with connection.cursor() as cursor:
-            sql = """select * from bookpool"""
+            sql = """select * from bookpool1 order by bookid"""
             cursor.execute(sql)
             books = cursor.fetchall()
         return books
@@ -20,8 +20,11 @@ class Book:
     #讀出單筆資料
     def single(self, id):
         with connection.cursor() as cursor:
-            sql = """select * from bookpool where id=%s"""
-            #tuple
+            # sql = """select * from bookpool where id=%s"""
+            sql = """select p.*, c.* 
+                    from bookpool1 p join bookcate c
+                    on p.bookcate = c.bookcate
+                    where p.id=%s"""
             cursor.execute(sql,(id,))
             book = cursor.fetchone()
         return book
@@ -29,23 +32,23 @@ class Book:
     #新增資料    
     def create(self, book):
         with connection.cursor() as cursor:
-            sql = """insert into bookpool(bookid,bookcate,bookname,author,issuedate,buydate,whoissue,bookimg01)
+            sql = """insert into bookpool1(bookid,bookcate,bookname,author,issuedate,buydate,whoissue,bookimg01)
                      values(%s,%s,%s,%s,%s,%s,%s,%s)"""
             cursor.execute(sql, book)
 
     def update(self, book):
         with connection.cursor() as cursor:
-            sql = """update bookpool set bookname=%s,author=%s,issuedate=%s,buydate=%s,whoissue=%s
+            sql = """update bookpool1 set bookname=%s,author=%s,issuedate=%s,buydate=%s,whoissue=%s
                      where id=%s"""
             cursor.execute(sql, book)
 
     def updateimg(self, book):
         with connection.cursor() as cursor:
-            sql = """update bookpool set bookimg01=%s
+            sql = """update bookpool1 set bookimg01=%s
                      where id=%s"""
             cursor.execute(sql, book)
 
     def delete(self, id):
         with connection.cursor() as cursor:
-            sql = """delete from bookpool where id=%s"""
+            sql = """delete from bookpool1 where id=%s"""
             cursor.execute(sql,(id,))

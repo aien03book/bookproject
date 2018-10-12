@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'store',
     'member',
     'bookbor',
-    'MeetingRoom',
+    'conferance',
     'boards',   
     'home',
     'todo',

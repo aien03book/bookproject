@@ -9,22 +9,23 @@
       <tr>
         <th scope="col" name="memberNo">會員號</th>
         <th scope="col" name="memberName">姓名</th>
-        <th scope="col" name="Email">Email</th>
-        <th scope="col" name="phone">電話</th>
+        <th scope="col" name="Email">Email</th>        
         <th scope="col" name="Email">註冊日期</th>
-        <th scope="col" name="Email">目前借書數量</th>
-        <th scope="col" name="Email">總借書數量</th>
+        <!-- <th scope="col" name="phone">電話</th> -->
+        <!-- <th scope="col" name="Email">目前借書數量</th>
+        <th scope="col" name="Email">總借書數量</th> -->
       </tr>
     </thead>
     <tbody>
       <tr>
         <td scope="row" id='memberidA'>{{memberId}}</td>
         <td>{{name}}</td>
-        <td>{{email}}</td>
-        <td></td>
+        <td>{{email}}</td>        
         <td>{{joindate}}</td>
+        <!-- <td></td>
         <td></td>
-      </tr>
+        <td></td>
+      </tr> -->
       
     </tbody>
   </table>
@@ -57,35 +58,43 @@
         
         
       function loadmemberbooksearch(){
-      $.get('/bookbor/member_bookinfo/'+ memberId +'/',function(bookrecords){
-        // console.log(bookrecords)
+      $.getJSON('/bookbor/member_bookinfo/'+ memberId +'/',function(bookrecords){
+        console.log(bookrecords)
+        
+          console.log(typeof(bookrecords))
+          
         $.each(bookrecords, function(i, bookrecord) {
-          // console.log(bookrecord)
-          // console.log(i)
-          var bookid=bookrecord.fields.bookid
-          var borrowtime=bookrecord.fields.borrowtime
-          var returntime=bookrecord.fields.returntime
-          // var borrowtime=bookrecord.fields.borrowtime
-          var returndate=new Date(returntime).getFullYear()+'-'+new Date(returntime).getMonth()+'-'+new Date(returntime).getDay()
-          var borrowdate=new Date(borrowtime).getFullYear()+'-'+new Date(borrowtime).getMonth()+'-'+new Date(borrowtime).getDay()
-          console.log(typeof(borrowdate),typeof(returntime))
+          
+          //讀出list中資料
+          var bookname=bookrecord.bookid_id__bookname
+          var borrowtime=bookrecord.borrowtime
+          var returntime=bookrecord.returntime
+          //時間轉成物件
+          var returndate=new Date(returntime)
+          var currenttime=new Date()
+          console.log(returndate)
+            
+            //判斷還書時間是否晚於今天
+              if (returndate>currenttime)
+                status="借閱中"
+              else
+                status="已還書"
+            
+          var returndate=new Date(returntime).getFullYear()+'-'+(new Date(returntime).getMonth()+1)+'-'+(new Date(returntime).getDate()+1)
+          var borrowdate=new Date(borrowtime).getFullYear()+'-'+(new Date(borrowtime).getMonth()+1)+'-'+(new Date(borrowtime).getDate()+1)
+          console.log(returndate)
           var celoder=$("<td></td>").text(i+1)
-          var celbookid=$("<td></td>").text(bookid)
+          var celbookname=$("<td></td>").text(bookname)
           var celborrowtime=$("<td></td>").text(borrowdate)
           var celreturntime=$("<td></td>").text(returndate)
-          var celstatus=$("<td></td>").text(" ")
-          
-          console.log(typeof(borrowdate),typeof(returntime))
-          var rowbookinfo=$("<tr></tr>").append([celoder,celbookid,celborrowtime,celreturntime,celstatus])
+          var celstatus=$("<td></td>").text(status)
+          var rowbookinfo=$("<tr></tr>").append([celoder,celbookname,celborrowtime,celreturntime,celstatus])
           bookinfodocument.append(rowbookinfo)});
           bookInfo.html(bookinfodocument)
-        
+         
       } 
-      )} 
+    )} 
   loadmemberbooksearch()
-  
-
-
 }) 
 
 // }  
