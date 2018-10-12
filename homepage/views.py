@@ -66,7 +66,7 @@ def update(request,id):
     return redirect("/checkin/")
 
     with connection.cursor()as cursor:
-        sql:"""select * from member where id =%"""
+        sql = """select * from member where id =%s"""
         cursor.execute(sql,(id,))
         select=cursor.fetchone()
     return render(request,'homepage/update.htm',locals())

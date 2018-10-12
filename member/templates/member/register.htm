@@ -30,6 +30,7 @@
 
         <div class="form-group row">
         <label for="inputAge" >年紀</label>
+        <input class="form-control" type="date" name="bday" value="2000-01-01">
         <input type="number" class="form-control" id="inputAge" placeholder="Age" name="age" value="{{select.4}}">
         </div>
         <div class="form-group row">
@@ -58,9 +59,9 @@
         var ce = $(this).val()
         $.get("../checkM/" + ce + "/",function(checkemail){
           if (checkemail == "1"){
-            $("#ce").removeClass("btn-warning").addClass("btn-danger").text("信箱已註冊，請換一個！")
+            $("#ce").removeClass("btn-warning").removeClass("btn-primary").addClass("btn-danger").text("信箱已註冊，請換一個！")
           }else{
-            $("#ce").removeClass("btn-warning").addClass("btn-primary").text("可以註冊使用！") 
+            $("#ce").removeClass("btn-warning").removeClass("btn-danger").addClass("btn-primary").text("可以註冊使用！") 
           }
         })
       })
@@ -68,13 +69,13 @@
         var cn = $(this).val()
         $.get("../checkN/" + cn + "/", function(checkname){
           if (checkname == "1"){
-            $("#cn").removeClass("btn-warning").addClass("btn-danger").text("名稱已使用!")
+            $("#cn").removeClass("btn-warning").removeClass("btn-primary").addClass("btn-danger").text("名稱已使用!")
           }else{
-            $("#cn").removeClass("btn-warning").addClass("btn-primary").text("名稱可使用!")
+            $("#cn").removeClass("btn-warning").removeClass("btn-danger").addClass("btn-primary").text("名稱可使用!")
           }
         })
       })
-      $("#contract").click(function(){
+      $("#contract").click(function(){      
         $("#ca").prop("disabled", false) 
         // if ($(this) == true){
         // $("#ca").prop("disabled", false)
