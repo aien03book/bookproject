@@ -13,8 +13,12 @@ urlpatterns = [
     path('checkid/<int:id>/',views.checkid,name="checkid"),
     #http://localhost:8000/boards/update
     path('update/<int:id>',views.update,name="update"),
-    #http://localhost:8000/boards/update
-    path('counts/',views.counts,name="counts"),
+    #http://localhost:8000/boards/chart
+    path('chart/',views.chart,name="chart"),
+    #http://localhost:8000/boards/count
+    path('count/',views.count,name="count"),
+
+
 
     #以下路徑無用
     #http://localhost:8000/boards/remove

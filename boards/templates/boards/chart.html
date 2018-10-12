@@ -1,0 +1,56 @@
+{% extends "base.htm" %}
+
+{% block styles %}
+{% endblock %}
+
+{% block main %}
+<div class="container">
+<a class="btn btn-info" href="{% url 'boards:site' %}" role="button">返回上一頁</a>
+<div id="chart" style="height: 400px;margin: 0 auto"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- 引用jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<!-- 引用highcharts -->    
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script>
+$(document).ready(function(){
+    var count = $.getJSON('../count',function(data){
+    Highcharts.chart('chart', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: '各類留言統計'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: '佔比',
+        colorByPoint: true,
+        data: data
+    }]
+    })
+  })
+})
+</script>
+{% endblock %}
+

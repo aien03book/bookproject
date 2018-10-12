@@ -16,7 +16,7 @@
     
     <div>
         <p><input type="text" id="searchbar" placeholder="請輸入欲搜尋的留言內容"><a class="btn btn-info" id="searchone" role="button" style="color:white"><i class="fas fa-search">搜尋</i></a>
-        
+        <a class="btn btn-info" href="{% url 'boards:chart' %}" role="button" id="chart">統計報表</a>
         <a class="btn btn-info" href="{% url 'boards:post' %}" role="button" style="float:right" id="post">我有話要說</a></p>
     </div>
     
@@ -41,15 +41,17 @@
     </div>
 </div>
 
+
 {% endblock%}
 
 {% block scripts%}
 
 <!-- 引用jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!-- 引用jQuery cookie -->
+<!-- 引用jQuery cookie -->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script>
+
+<script>
 $(document).ready(function(){
 
 //定義一個叫做searchall的function 
@@ -107,7 +109,6 @@ $('#searchone').on('click',function(){
         }
         searchone()
         }
-
     })
 
 
@@ -151,10 +152,8 @@ $('#searchone').on('click',function(){
             location.href='/member/login/?url=' + theUrl
          }
     })
-
 })
-    </script>
+</script>
 
-    
 {% endblock%}
 
